@@ -1,0 +1,175 @@
+.App {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: black;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.App-header {
+  color: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #282c34b7;
+  padding: 1.25em;
+  z-index: 100;
+
+  display: grid;
+  grid-template-columns: 23vw auto 27vw;
+  align-items: center;  /* Vertically aligns all child elements */
+  align-content: center;
+  text-align: center;
+}
+
+
+.top-left {
+  grid-column: 1;
+  justify-self: start;
+  align-content: center;
+  text-align: center;
+}
+
+.center {
+  grid-column: 2;
+  justify-self: center; 
+  display: flex;
+  flex-direction: column;
+  padding-left: 0.5em;
+  padding-right: 1em;
+
+}
+
+.top-right {
+  grid-column: 3;
+  justify-self: end; 
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.Fullname {
+  font-size: large;
+}
+
+
+p {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.TabMenu {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap;
+
+  align-items: center;  /* Vertically aligns all child elements */
+  align-content: center;
+  text-align: center;
+}
+
+.TabMenu button {
+  color: black;
+  padding: 0.625em;
+  margin: 0.3125em;
+  font-size: 0.75em;
+  min-width: 0.2em;
+  border-radius: 0.3125em;
+  cursor: pointer;
+  background-color: #dcdbdbe1;
+  transition: all 0.3s ease;
+  flex: 1 1 auto;
+  font-weight: bold;  /* Make font bold for a stylish look */
+}
+
+.TabMenu button:hover {
+  background-color: #969494db;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);  /* Add stronger shadow on hover */
+}
+
+.TabMenu button.active {
+  background-color: transparent;  /* Set background to transparent when active */
+  color: white;
+  box-shadow: none;  /* Remove shadow when active */
+}
+
+
+.Timeline {
+  z-index: 1;
+  margin-top: 1.25em;
+  padding: 1.25em;
+  border-radius: 0.3125em;
+  background: #f5f5f5;
+}
+
+.Timeline-line {
+  height: 0.125em;
+  background: black;
+  margin-bottom: 1.25em;
+}
+
+.Timeline-event {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.25em;
+}
+
+.Timeline-event img {
+  width: 3.125em;
+  height: 3.125em;
+  border-radius: 50%;
+  margin-right: 1.25em;
+}
+
+.Timeline {
+  z-index: 1;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 1.25em;
+  margin: 2.5em;
+  margin-top: 10em;
+}
+
+.Timeline::before, .Timeline::after {
+  content: "";
+  position: absolute;
+  background-color: #333;
+}
+
+.Timeline::before {
+  top: 6.5625em;
+  bottom: 0.625em;
+  left: calc(15% + 0.18em);
+  width: 0.125em;
+}
+
+
+
+
+
+
+
+@media (max-width: 600px) {
+  .Fullname {
+    font-size: medium;
+  }
+
+  .TabMenu {
+  }
+
+  .TabMenu button {
+  }
+
+  .Timeline {
+    padding: 0.625em;
+    margin: 0.9375em;
+    margin-top: 10.9375em;
+  }
+
+  .Timeline::before {
+    top: 6.0625em;
+    bottom: 0.625em;
+    left: calc(15% - 0.27em);
+    width: 0.125em;
+  }
+}
+
