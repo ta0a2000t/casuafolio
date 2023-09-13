@@ -2,7 +2,7 @@
 
 ## License
 
-This project is open-sourced under the MIT License. See [LICENSE](LICENSE.md) for more details.
+This project is open-sourced under the MIT License. See [LICENSE](LICENSE) for more details.
 
 ## Overview
 
@@ -42,9 +42,6 @@ CasuaFolio bridges the gap between the formality of LinkedIn and the casual atmo
     - **For Students**: Search for `"free web hosting [Your School's Name]"` to check if your school offers free hosting. Examples include University of Maryland, University of Illinois Urbana-Champaign, and Boston University.
     - **Free Services**: [GitHub Pages](https://pages.github.com/), [Netlify](https://www.netlify.com/), [Vercel](https://vercel.com/)
 
-### Prepare for Hosting
-
-Run `npm run build` in your terminal to create a `build` directory. You can then upload its contents to your chosen hosting service.
 
 ### Prepare for Hosting
 
