@@ -38,16 +38,11 @@ CasuaFolio bridges the gap between the formality of LinkedIn and the casual atmo
 2. **Personalize**
     - [Personalization Guide](./tutorial_files/personalize.md)
 
-3. **Host Online**
-    - **For Students**: Search for `"free web hosting [Your School's Name]"` to check if your school offers free hosting. Examples include University of Maryland, University of Illinois Urbana-Champaign, and Boston University.
-    - **Free Services**: [GitHub Pages](https://pages.github.com/), [Netlify](https://www.netlify.com/), [Vercel](https://vercel.com/)
 
+3. **Host Your CasuaFolio For FREE**
+    - [Publishing Your CasuaFolio Online (Videos Included!)](./tutorial_files/publish_website_online.md) (Ready to go live? Follow this guide!🚀)
 
-### Prepare for Hosting
-
-Run `npm run build` in your terminal to create a `build` directory, then upload its contents to your chosen hosting service.
-
-> 📝 **Note**: CasuaFolio is designed as a static website, making it lightweight and incredibly easy to host. There's no need for a complex server setup. Many hosting services offer free or low-cost options specifically designed for static websites. For more information, check out this [list of top 10 free static website hosting providers](https://blog.back4app.com/top-10-free-static-website-hosting-providers/). Getting your portfolio online is easier than you might think!
+> 📝 **Note**: CasuaFolio is designed as a static website, making it lightweight and incredibly easy to host. There's no need for a complex server setup. Simply follow our guide to get your site up and running!
 
 
 ## How to Contribute
