@@ -2,7 +2,7 @@ import { readdir, rename } from "fs/promises";
 import { dirname, join } from "path";
 
 const imageExtensions = /\.(jpg|jpeg)$/i;
-const imageBaseName = /^image[1-9]{1}[0-9]*\.jpg$/;
+const imageBaseName = /^image[1-9]{1}[0-9]*\.jpg$/i;
 
 /**
  * @description Reads every file in a folder that in the format "image{number}.jpg"
