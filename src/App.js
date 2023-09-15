@@ -7,8 +7,9 @@ import 'font-awesome/css/font-awesome.min.css';
 import About from './components/About'
 import SocialIcons from './components/SocialIcons'; // adjust the import path as needed
 
-import {FULL_NAME , EXPERIENCE_EVENTS, PROJECT_EVENTS, VOLUNTEER_EVENTS, HEADER_FOOTER_COLOR} from './personalizationConstants';
+import {FULL_NAME , EXPERIENCE_EVENTS, PROJECT_EVENTS, VOLUNTEER_EVENTS} from './personalizationConstants';
 import {ABOUT_TAB_NAME, VOLUNTEER_TAB_NAME, EXPERIENCE_TAB_NAME, PROJECTS_TAB_NAME, EXPERIENCE_PAGE_HEADLINE, PROJECTS_PAGE_HEADLINE, VOLUNTEER_PAGE_HEADLINE} from './personalizationConstants';
+import {HEADER_COLOR} from './stylingConstants';
 import { getColor } from './helpers/utils';
 
 
@@ -19,7 +20,7 @@ function App() {
   const [activeTimeline, setActiveTimeline] = useState('experiences'); // 'projects', 'volunteer', or 'experiences'
   const aboutRef = useRef(null); // to scroll to about section
   const [sectionToScroll, setSectionToScroll] = useState(null);
-  const headerColor = getColor(HEADER_FOOTER_COLOR, 7);
+  const headerColor = getColor(HEADER_COLOR, 7);
 
 
 
