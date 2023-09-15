@@ -10,6 +10,9 @@ import SocialIcons from './components/SocialIcons'; // adjust the import path as
 import {FULL_NAME , EXPERIENCE_EVENTS, PROJECT_EVENTS, VOLUNTEER_EVENTS} from './personalizationConstants';
 import {ABOUT_TAB_NAME, VOLUNTEER_TAB_NAME, EXPERIENCE_TAB_NAME, PROJECTS_TAB_NAME, EXPERIENCE_PAGE_HEADLINE, PROJECTS_PAGE_HEADLINE, VOLUNTEER_PAGE_HEADLINE} from './personalizationConstants';
 
+import {HEADER_COLOR} from './stylingConstants';
+import { getColor } from './helpers/utils';
+
 
 function App() {
   const bgColor = 'rgba(0, 0, 0, 1)';
@@ -19,6 +22,7 @@ function App() {
   const aboutRef = useRef(null); // to scroll to about section
   const [sectionToScroll, setSectionToScroll] = useState(null);
 
+  const headerColor = getColor(HEADER_COLOR, 7);
 
 
 
