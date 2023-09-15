@@ -178,3 +178,13 @@ export const PROJECT_EVENTS = [
     link: "https://www.youtube.com/shorts/pCsyJK2JL6g"
   }
 ]
+
+/*
+Color Options:
+  - Default: 282c34
+  - Red: FF0000
+  - Blue: 0000FF
+  - Green: 008000
+  ...etc
+*/
+export const HEADER_FOOTER_COLOR = "282c34"; 
