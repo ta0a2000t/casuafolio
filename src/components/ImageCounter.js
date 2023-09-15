@@ -1,46 +1,44 @@
-import React, { Component } from "react";
-const fs = require("fs");
-const path = require("path");
+import React, { useState, useEffect } from "react";
+import fs from "fs";
+import path from "path";
 
-class ImageCounter extends Component {
-  gallery_image_counter(pathToFolder) {
-    try {
-      const files = fs.readdirSync(pathToFolder);
-      let count = 0;
+function ImageCounter() {
+  const [imageCount, setImageCount] = useState(-1);
 
-      files.forEach((file) => {
-        const filePath = path.join(pathToFolder, file);
+  useEffect(() => {
+    async function galleryImageCounter(pathToFolder) {
+      try {
+        const files = await fs.promises.readdir(pathToFolder);
+        let count = 0;
 
-        if (file.match(/^image\d+\.jpg$/) && file !== "image0.jpg") {
-          count++;
-        }
-      });
+        files.forEach((file) => {
+          const filePath = path.join(pathToFolder, file);
 
-      return count;
-    } catch (err) {
-      console.error("Error reading folder:", err);
-      return -1;
+          if (file.match(/^image\d+\.jpg$/) && file !== "image0.jpg") {
+            count++;
+          }
+        });
+
+        setImageCount(count);
+      } catch (err) {
+        console.error("Error reading folder:", err);
+        setImageCount(-1);
+      }
     }
-  }
 
-  render() {
     const folderPath = "public/about_images";
-    const imageCount = this.gallery_image_counter(folderPath);
+    galleryImageCounter(folderPath);
+  }, []);
 
-    if (imageCount >= 0) {
-      return (
-        <div>
-          <p>Number of event images: {imageCount}</p>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <p>An error occurred while reading the folder.</p>
-        </div>
-      );
-    }
-  }
+  return (
+    <div>
+      {imageCount >= 0 ? (
+        <p>Number of event images: {imageCount}</p>
+      ) : (
+        <p>An error occurred while reading the folder.</p>
+      )}
+    </div>
+  );
 }
 
 export default ImageCounter;
