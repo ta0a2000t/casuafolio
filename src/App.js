@@ -7,8 +7,9 @@ import 'font-awesome/css/font-awesome.min.css';
 import About from './components/About'
 import SocialIcons from './components/SocialIcons'; // adjust the import path as needed
 
-import {FULL_NAME , EXPERIENCE_EVENTS, PROJECT_EVENTS, VOLUNTEER_EVENTS} from './personalizationConstants';
+import {FULL_NAME , EXPERIENCE_EVENTS, PROJECT_EVENTS, VOLUNTEER_EVENTS, HEADER_FOOTER_COLOR} from './personalizationConstants';
 import {ABOUT_TAB_NAME, VOLUNTEER_TAB_NAME, EXPERIENCE_TAB_NAME, PROJECTS_TAB_NAME, EXPERIENCE_PAGE_HEADLINE, PROJECTS_PAGE_HEADLINE, VOLUNTEER_PAGE_HEADLINE} from './personalizationConstants';
+import { getColor } from './helpers/utils';
 
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
   const [activeTimeline, setActiveTimeline] = useState('experiences'); // 'projects', 'volunteer', or 'experiences'
   const aboutRef = useRef(null); // to scroll to about section
   const [sectionToScroll, setSectionToScroll] = useState(null);
-
+  const headerColor = getColor(HEADER_FOOTER_COLOR, 7);
 
 
 
@@ -64,7 +65,7 @@ function App() {
   return (
     <div className={`App ${theme}`} style={{ backgroundColor: bgColor }}>
     
-    <header className="App-header" >
+    <header className="App-header" style={{ backgroundColor: headerColor }}>
       <div className="top-left">
         <div className="Fullname">{FULL_NAME}</div>
       </div>
