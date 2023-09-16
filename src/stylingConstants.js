@@ -6,4 +6,4 @@ Color Options:
   - Green: 008000
   ...etc
 */
-export const HEADER_COLOR = "282cff"; 
+export const HEADER_COLOR = "282c34"; 
