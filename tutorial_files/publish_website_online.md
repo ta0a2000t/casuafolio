@@ -31,6 +31,10 @@ Hosting is the process of making your website accessible over the internet by st
   - **Why**: Easy setup and it's free.
 - **Basic How-To Video**: Follow the steps here [Host a static website for FREE on GitHub](https://youtu.be/M5mg0r4ajt4?si=FFnGEqH276vJcpDV).
 - **Clarifying Steps**: At minute 5:00 of this video, the commentator copies & pastes the website files. For additional clarification on what to copy to GitHub Pages (for CasuaFolio), refer to the 1-minute video above.
+- Now that you know what your online website URL is, go to `build` folder, edit `sitemap.xml` file. <p>Make sure to change the URL in the sitemap file to match your website's URL.</p>
+<img src="media_assets/sitemap_file.png" alt="Sitemap File">
+<br>
+<img src="media_assets/sitemap_file_contents.png" alt="Contents of the Sitemap File" style="width:40em;">
 
 >Note: If you do not want to use GitHub Pages, many hosting services offer free options specifically designed for static websites. For more information, check out this [list of top 10 free static website hosting providers](https://blog.back4app.com/top-10-free-static-website-hosting-providers/). Getting your portfolio online is easier than you might think!
 
