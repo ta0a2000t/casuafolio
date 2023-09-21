@@ -1,3 +1,4 @@
+/* Transitions */
 .fade-out {
     transition: opacity 0.5s ease-in-out;
     opacity: 0;
@@ -5,10 +6,205 @@
 
 .highlight {
     transition: background-color 0.5s ease-in-out;
-    background-color: yellow;
+    background-color: #ffc107; /* Changed to more clear yellow */
+}
+
+/* Dark Mode Styles */
+body {
+    background-color: #181818; /* Slightly lighter dark */
+    color: #eeeeee; /* More readable light gray */
+}
+
+.container, .eventDiv, input, textarea, fieldset {
+    background-color: #282828; /* Slightly lighter than the body for contrast */
+}
+
+
+/* Reset CSS */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+}
+
+.container {
+    width: 50%;
+    margin: auto;
+}
+
+/* Header Styles */
+h1 {
+    text-align: center;
+}
+
+/* Button Styles */
+button {
+    display: inline-block;
+    background: #4caf50; /* Green for Save buttons */
+    color: #ffffff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 2px;
+}
+
+
+button:hover {
+    background: #2e7832; /* Darker Green for hover */
+}
+
+
+fieldset {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #777777; /* Darker border for contrast */
+    border-radius: 5px;
+}
+
+legend {
+    color: #b3b3b3; /* Lighter gray for better readability */
+    font-weight: bold;
+}
+
+label, input, textarea {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input, textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border: 1px solid #666666; /* Darker for better contrast */
+    border-radius: 5px;
+    font-size: 16px;
+    min-width: 4em;
+    color: rgb(255, 255, 255);
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: #181818;
+}
+
+/* Dynamic Fields Styles */
+.eventDiv, .skillsDiv {
+    background: #1a1a1a;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.eventDiv {
+    margin-top: 2em;
+}
+
+.keyDiv {
+    margin-bottom: 10px;
+}
+
+.a-skill-input {
+    max-width: 10em;
+}
+
+.skillsDiv {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.skill-delete-btn, .event-delete-btn {
+    background: #e53935; /* Red for Delete buttons */
+}
+
+.skill-delete-btn:hover, .event-delete-btn:hover {
+    background: #d32f2f; /* Darker Red for hover */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        width: 80%;
+    }
+    input, textarea {
+        width: calc(100% - 22px);
+    }
+}
+
+
+
+.undo-redo {
+    position: sticky; 
+    top: 0;
+    padding-left: 2em;
+    padding-top: 2em;
+    padding-bottom: 1em;
+    padding-right: 1em;
+    width: 100%;
+
+
+    background-color: #181818be;
+    
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #181818be;
+    font-size: 15px;
+
+    padding-left: 2em;
+    padding-bottom: 2em;
+    padding-top: 1em;
+    padding-right: 1em;
+    
+}
+
+
+
+.personalizationForm {
+    padding: 3.5em;
+    padding-bottom: 400em;
+}
+
+html{ 
+    padding-bottom: 8em;
+
+    padding-left: 2em;
+    padding-right: 2em;
+    padding-top: 1em;
+
 }
 
 
 
 
 
+#back-button {
+    background-color: #23232396;
+    color: #ffffff; /* White */
+    padding: 10px 20px;
+    text-decoration: none; /* Removes underline from link */
+    border-radius: 5px;
+    margin-right: 20px; /* Gives some space between the Back button and title */
+    display: inline-flex; /* Allows the button and title to be on the same line */
+    align-items: center; /* Centers text and icon vertically */
+}
+
+#back-button:hover {
+    background-color:#53187378; /* Darker green on hover */
+}
+
+.navigation-bar {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 1em;
+}
+
+i {
+    margin-right: 5px; /* Space between the icon and the text */
+}

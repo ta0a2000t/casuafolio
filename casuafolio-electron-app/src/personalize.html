@@ -3,15 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Personalize</title>
+    <link rel="stylesheet" href="personalize.css">
+    
     <script defer src="personalization_main.js"></script> <!-- Reference to your JS file -->
 </head>
 <body>
-
-    <h1>Personalize Your Settings</h1>
-    <button id="undoButton">Undo Save</button>
-    <button id="redoButton">Redo Save</button>
+    <nav class="navigation-bar">
+        <a href="index.html" id="back-button">
+            <img src="icons8-back-96.png" alt="Back" width="50"> Back
+        </a>
+        <h1>Personalize Your Settings</h1>
+    </nav>
+    
+    
+    <nav class="undo-redo">
+        <button id="undoButton">Undo Save</button>
+        <button id="redoButton">Redo Save</button>
+    </nav>
 
     <div id="personalizationForm">
+
+
 
         <fieldset>
             <legend>Basic Info</legend>
@@ -113,9 +125,13 @@
             <!-- To be populated by JavaScript -->
         </fieldset>
 
-        <button id="save-changes-btn">Save Changes</button>
 
     </div>
+
+    <footer>
+        <button id="save-changes-btn">Save Changes</button>
+    </footer>
+
     
 </body>
 </html>

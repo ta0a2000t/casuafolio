@@ -4,6 +4,7 @@
 function addEventDeleteButton(eventDiv, index, sectionInfo, sectionId) {
   const deleteButton = document.createElement('button');
   deleteButton.textContent = 'Delete';
+  deleteButton.classList.add("event-delete-btn")
   deleteButton.addEventListener('click', () => {
     eventDiv.classList.add('fade-out');
   
@@ -48,101 +49,103 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
 
   // Loop through keys in each event
   Object.keys(event).forEach((key) => {
-  const keyDiv = document.createElement('div');
-  keyDiv.classList.add('keyDiv');
+    const keyDiv = document.createElement('div');
+    keyDiv.classList.add('keyDiv');
 
-  const keyLabel = document.createElement('label');
-  keyLabel.textContent = key;
-  keyLabel.htmlFor = `${key}-${index}`;
-  keyDiv.appendChild(keyLabel);
+    const keyLabel = document.createElement('label');
+    keyLabel.textContent = key;
+    keyLabel.htmlFor = `${key}-${index}`;
+    keyDiv.appendChild(keyLabel);
 
-  // Handle different types of key-value pairs
-  if (key === 'description') {
-      const textArea = document.createElement('textarea');
-      textArea.id = `${key}-${index}`;
-      textArea.value = event[key].join('\n'); // Join array into a multi-line string
-      keyDiv.appendChild(textArea);
-  } else if (key === "gallery_size") {
-      const inputField = document.createElement('input');
-      inputField.type = 'number';
-      inputField.id = `${key}-${index}`;
-      inputField.value = event[key];
-      keyDiv.appendChild(inputField);
-  } else if (key === 'skills') {
-    const skillsDiv = document.createElement('div');
-    skillsDiv.classList.add('skillsDiv');
-
-    const addButton = document.createElement('button');
-    addButton.textContent = '+'; 
-    addButton.addEventListener('click', function() {
-        const skillInputs = Array.from(skillsDiv.querySelectorAll('input'));
-    
-        if (skillInputs.length >= 10) {
-            alert('You cannot add more than 10 skills.');
-            return;
-        }
-    
-        if (skillInputs.some(input => input.value.trim().length === 0)) {
-            alert('You must populate the empty skill field first.');
-            return;
-        }
-
-        // Create and add a new skill input with a delete button
-        createSkillInput(skillsDiv, '', `${key}-${index}_${skillInputs.length}`);
-    });
-    
-    skillsDiv.appendChild(addButton);
-
-    // Function to create skill input and its delete button
-    function createSkillInput(parent, value, id) {
-        const skillInput = document.createElement('input');
-        skillInput.type = 'text';
-        skillInput.value = value;
-        skillInput.id = id;
-        skillInput.placeholder = 'New Skill';
-
-
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'x';
-        deleteButton.addEventListener('click', function() {
-            if (skillsDiv.querySelectorAll('input').length <= 2) {
-                alert('You must have at least 2 skills.');
-                return;
-            }
-            skillInput.remove();
-            deleteButton.remove();
-        });
-
-        parent.appendChild(skillInput);
-        parent.appendChild(deleteButton);
-    }
-
-    if (event[key] && event[key].length >= 2) {
-        event[key].forEach((skill, skillIndex) => {
-            createSkillInput(skillsDiv, skill, `${key}-${index}_${skillIndex}`);
+    // Handle different types of key-value pairs
+    if (key === 'description') {
+        const textArea = document.createElement('textarea');
+        textArea.id = `${key}-${index}`;
+        textArea.value = event[key].join('\n'); // Join array into a multi-line string
+        keyDiv.appendChild(textArea);
+    } else if (key === "gallery_size") {
+        const inputField = document.createElement('input');
+        inputField.type = 'number';
+        inputField.id = `${key}-${index}`;
+        inputField.value = event[key];
+        keyDiv.appendChild(inputField);
+    } else if (key === 'skills') {
+      const skillsDiv = document.createElement('div');
+      skillsDiv.classList.add('skillsDiv');
+  
+      const addButton = document.createElement('button');
+      addButton.textContent = '+';
+      skillsDiv.appendChild(addButton); // Append addButton as soon as you create it
+  
+      // Function to create skill input and its delete button
+      function createSkillInput(parent, value, id) {
+          const skillInput = document.createElement('input');
+          skillInput.type = 'text';
+          skillInput.value = value;
+          skillInput.id = id;
+          skillInput.placeholder = 'New Skill';
+          skillInput.classList.add("a-skill-input")
+  
+          const deleteButton = document.createElement('button');
+          deleteButton.textContent = 'x';
+          deleteButton.classList.add("skill-delete-btn");
+          
+          parent.insertBefore(skillInput, addButton); // Insert before addButton
+          parent.insertBefore(deleteButton, addButton); // Insert before addButton
+          
+          deleteButton.addEventListener('click', function() {
+              if (skillsDiv.querySelectorAll('input').length <= 2) {
+                  alert('You must have at least 2 skills.');
+                  return;
+              }
+              skillInput.remove();
+              deleteButton.remove();
+          });
+      }
+  
+      if (event[key] && event[key].length >= 2) {
+          event[key].forEach((skill, skillIndex) => {
+              createSkillInput(skillsDiv, skill, `${key}-${index}_${skillIndex}`);
+          });
+      } else {
+          alert('You must have at least 2 skills.');
+      }
+  
+      addButton.addEventListener('click', function() {
+          const skillInputs = Array.from(skillsDiv.querySelectorAll('input'));
+  
+          if (skillInputs.length >= 10) {
+              alert('You cannot add more than 10 skills.');
+              return;
+          }
+  
+          if (skillInputs.some(input => input.value.trim().length === 0)) {
+              alert('You must populate the empty skill field first.');
+              return;
+          }
+  
+          // Create and add a new skill input with a delete button
+          createSkillInput(skillsDiv, '', `${key}-${index}_${skillInputs.length}`);
+      });
+  
+      keyDiv.appendChild(skillsDiv);
+  } else if (Array.isArray(event[key])) {
+        event[key].forEach((subValue, subIndex) => {
+        const inputField = document.createElement('input');
+        inputField.type = 'text';
+        inputField.id = `${key}-${index}_${subIndex}`;
+        inputField.value = subValue;
+        keyDiv.appendChild(inputField);
         });
     } else {
-        alert('You must have at least 2 skills.');
+        const inputField = document.createElement('input');
+        inputField.type = 'text';
+        inputField.id = `${key}-${index}`;
+        inputField.value = event[key];
+        keyDiv.appendChild(inputField);
     }
 
-    keyDiv.appendChild(skillsDiv);
-} else if (Array.isArray(event[key])) {
-      event[key].forEach((subValue, subIndex) => {
-      const inputField = document.createElement('input');
-      inputField.type = 'text';
-      inputField.id = `${key}-${index}_${subIndex}`;
-      inputField.value = subValue;
-      keyDiv.appendChild(inputField);
-      });
-  } else {
-      const inputField = document.createElement('input');
-      inputField.type = 'text';
-      inputField.id = `${key}-${index}`;
-      inputField.value = event[key];
-      keyDiv.appendChild(inputField);
-  }
-
-  eventDiv.appendChild(keyDiv);
+    eventDiv.appendChild(keyDiv);
   });
     
     
@@ -171,7 +174,7 @@ const createEventsSection = (sectionInfo, sectionId) => {
   sectionDiv.appendChild(addButton);
 
   // Loop through each event in reverse
-  for (let index = 0 ; index < sectionInfo.length; index++) {
+  for (let index = sectionInfo.length - 1 ; index >= 0; index--) {
       const event = sectionInfo[index];
       const eventDiv = createEventDiv(event, index, sectionInfo, sectionId);
       sectionDiv.appendChild(eventDiv);

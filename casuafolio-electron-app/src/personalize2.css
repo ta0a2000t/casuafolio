@@ -1,0 +1,131 @@
+.fade-out {
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+}
+
+.highlight {
+    transition: background-color 0.5s ease-in-out;
+    background-color: yellow;
+}
+
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #121212; /* Dark background color */
+    color: #e0e0e0; /* Light text color */
+    line-height: 1.6;
+}
+
+.container {
+    width: 50%;
+    margin: auto;
+}
+
+/* Header Styles */
+h1 {
+    text-align: center;
+    padding: 1em 0;
+    color: #ffffff; /* White text color for headers */
+}
+
+/* Button Styles */
+button {
+    display: inline-block;
+    background: #262626; /* Darker button background color */
+    color: #ffffff; /* White text color for buttons */
+    padding: 10px 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 2px;
+}
+
+button:hover {
+    background: #434343; /* Slightly lighter button background color on hover */
+}
+
+/* Form Styles */
+#personalizationForm {
+    padding: 30px;
+    background-color: #1e1e1e; /* Dark background color for form */
+}
+
+fieldset {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #333; /* Darker border color */
+    border-radius: 5px;
+}
+
+legend {
+    color: #ffffff; /* White text color for legend */
+    font-weight: bold;
+}
+
+label, input, textarea {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input, textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border: 1px solid #333; /* Darker border color */
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #262626; /* Dark input background color */
+    color: #e0e0e0; /* Light text color for inputs */
+}
+
+/* Dynamic Fields Styles */
+.eventDiv {
+    background: #1e1e1e; /* Dark background color for eventDiv */
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.keyDiv {
+    margin-bottom: 10px;
+}
+
+.skillsDiv {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.skill-delete-btn {
+    background: #ff4d4d;
+}
+
+.skill-delete-btn:hover {
+    background: #ff1a1a;
+}
+
+.event-delete-btn {
+    background: #ff4d4d;
+    margin-top: 10px;
+}
+
+.event-delete-btn:hover {
+    background: #ff1a1a;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        width: 80%;
+    }
+
+    input, textarea {
+        width: calc(100% - 22px);
+    }
+}
