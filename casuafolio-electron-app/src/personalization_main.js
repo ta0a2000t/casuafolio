@@ -18,20 +18,22 @@ fs.readFile(relativePathToPersonalizationConstants, 'utf8', (err, data) => {
 
 function handleSubmit() {
   let info = readForm();
-  if (isValidForm(info)) {
-    
+  const validationResult = isValidForm(info);
+  if (validationResult.valid === true) {
     history.save();
 
     // Perform file write operation
     fs.writeFile(relativePathToPersonalizationConstants, JSON.stringify(info), (err) => {
       if (err) {
+        alert("Error While Saving")
         console.error("Could not write to file", err);
         return;
       }
-      console.log("Successfully saved data.");
+
+      alert("Successfully Saved :) ");
     });
   } else {
-    console.log("Form is not valid.");
+    alert("Saving Failed :(  ".concat(validationResult.message))
   }
 }
 
@@ -39,4 +41,3 @@ document.getElementById('save-changes-btn').addEventListener('click', handleSubm
 
 document.getElementById('undoButton').addEventListener('click', undoChanges);
 document.getElementById('redoButton').addEventListener('click', redoChanges); 
-

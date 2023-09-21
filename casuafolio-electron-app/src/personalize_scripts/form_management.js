@@ -81,11 +81,105 @@ function readForm() {
   return info;
 }
 
-// Function to validate the form
-function isValidForm(info) {
-  console.log("validating form")
-  return true;
+
+
+// Helper function to check if a string is a valid URL
+function isValidURL(str) {
+  try {
+    new URL(str);
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
+
+// Helper function to validate if a field is non-empty after trimming
+function isNonEmpty(str) {
+  return typeof str === "string" && str.trim().length > 0;
+}
+
+
+function validateEvent(event) {
+  if (!isNonEmpty(event.title)) return { valid: false, message: "Event title is empty." };
+
+  if (!isNonEmpty(event.event_name)) 
+    return { valid: false, message: `Event name for "${event.title}" is empty.` };
+    
+  if (!isNonEmpty(event.date)) 
+    return { valid: false, message: `Event date for "${event.title}" is empty.` };
+  
+  if (!Array.isArray(event.description) || event.description.some(text => !isNonEmpty(text))) {
+    return { valid: false, message: `All description items in the event titled "${event.title}" should be non-empty.` };
+  }
+  
+  if (!Array.isArray(event.skills) || event.skills.some(skill => !isNonEmpty(skill))) {
+    return { valid: false, message: `All skills in the event titled "${event.title}" should be non-empty.` };
+  }
+  
+  if (!isNonEmpty(event.directory)) 
+    return { valid: false, message: `Directory for "${event.title}" is empty.` };
+
+  if (typeof event.gallery_size !== 'number' || event.gallery_size < 0) {
+    return { valid: false, message: `Gallery size for "${event.title}" should be a non-negative number.` };
+  }
+  
+  if (event.link && !isValidURL(event.link)) 
+    return { valid: false, message: `Invalid link URL for "${event.title}".` };
+
+  return { valid: true };
+}
+
+
+
+
+// Function to validate the main info object
+function isValidForm(info) {
+  // Validate top-level string fields
+  const topLevelStringFields = [
+    "FULL_NAME", "SITE_TITLE", "META_DESCRIPTION",
+    "ABOUT_SECTION_GREETING", "YOUTUBE_LINK", "LINKEDIN_LINK",
+    "GITHUB_LINK", "TWITTER_LINK", "INSTAGRAM_LINK", "RESUME_LOCATION",
+    "ABOUT_TAB_NAME", "VOLUNTEER_TAB_NAME", "EXPERIENCE_TAB_NAME",
+    "PROJECTS_TAB_NAME", "EXPERIENCE_PAGE_HEADLINE", "PROJECTS_PAGE_HEADLINE",
+    "VOLUNTEER_PAGE_HEADLINE"
+  ];
+
+  for (const field of topLevelStringFields) {
+    if (isNonEmpty(info[field])) {
+          // Check if URL fields are valid
+      if (field.endsWith("_LINK") && info[field] && !isValidURL(info[field])) {
+        return { valid: false, message: `${field} is not a valid Link (URL).` };
+      }
+    } else {
+      info[field] = ""; // trimmed
+    }
+
+  }
+
+  // Validate ABOUT_SECTION_TEXT
+  if (!Array.isArray(info.ABOUT_SECTION_TEXT) || info.ABOUT_SECTION_TEXT.some(text => !isNonEmpty(text))) {
+    return { valid: false, message: "All items in ABOUT_SECTION_TEXT should be non-empty." };
+  }
+
+  // Validate events in EXPERIENCE_EVENTS, VOLUNTEER_EVENTS, and PROJECT_EVENTS
+  const eventCategories = ["EXPERIENCE_EVENTS", "VOLUNTEER_EVENTS", "PROJECT_EVENTS"];
+  for (const category of eventCategories) {
+    if (!Array.isArray(info[category])) {
+      return { valid: false, message: `${category} should be an array.` };
+    }
+
+    for (const event of info[category]) {
+      const validationResult = validateEvent(event);
+      if (!validationResult.valid) {
+        return validationResult;
+      }
+    }
+  }
+
+  // If everything passed, the object is valid
+  return { valid: true, message: "Info object is valid." };
+}
+
 
 
 module.exports = {

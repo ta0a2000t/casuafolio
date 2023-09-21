@@ -43,7 +43,6 @@ fs.readFile(relativePathToPersonalizationConstants, 'utf8', (err, data) => {
   info = JSON.parse(data);
   history.save();
 
-  console.log(info)
   populateForm(info);
 
 });

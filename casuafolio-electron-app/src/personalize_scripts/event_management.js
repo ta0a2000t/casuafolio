@@ -53,19 +53,19 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
 
   const keyLabel = document.createElement('label');
   keyLabel.textContent = key;
-  keyLabel.htmlFor = `${key}_${index}`;
+  keyLabel.htmlFor = `${key}-${index}`;
   keyDiv.appendChild(keyLabel);
 
   // Handle different types of key-value pairs
   if (key === 'description') {
       const textArea = document.createElement('textarea');
-      textArea.id = `${key}_${index}`;
+      textArea.id = `${key}-${index}`;
       textArea.value = event[key].join('\n'); // Join array into a multi-line string
       keyDiv.appendChild(textArea);
   } else if (key === "gallery_size") {
       const inputField = document.createElement('input');
       inputField.type = 'number';
-      inputField.id = `${key}_${index}`;
+      inputField.id = `${key}-${index}`;
       inputField.value = event[key];
       keyDiv.appendChild(inputField);
   } else if (key === 'skills') {
@@ -88,7 +88,7 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
         }
 
         // Create and add a new skill input with a delete button
-        createSkillInput(skillsDiv, '', `${key}_${index}_${skillInputs.length}`);
+        createSkillInput(skillsDiv, '', `${key}-${index}_${skillInputs.length}`);
     });
     
     skillsDiv.appendChild(addButton);
@@ -99,6 +99,8 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
         skillInput.type = 'text';
         skillInput.value = value;
         skillInput.id = id;
+        skillInput.placeholder = 'New Skill';
+
 
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'x';
@@ -117,7 +119,7 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
 
     if (event[key] && event[key].length >= 2) {
         event[key].forEach((skill, skillIndex) => {
-            createSkillInput(skillsDiv, skill, `${key}_${index}_${skillIndex}`);
+            createSkillInput(skillsDiv, skill, `${key}-${index}_${skillIndex}`);
         });
     } else {
         alert('You must have at least 2 skills.');
@@ -128,14 +130,14 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
       event[key].forEach((subValue, subIndex) => {
       const inputField = document.createElement('input');
       inputField.type = 'text';
-      inputField.id = `${key}_${index}_${subIndex}`;
+      inputField.id = `${key}-${index}_${subIndex}`;
       inputField.value = subValue;
       keyDiv.appendChild(inputField);
       });
   } else {
       const inputField = document.createElement('input');
       inputField.type = 'text';
-      inputField.id = `${key}_${index}`;
+      inputField.id = `${key}-${index}`;
       inputField.value = event[key];
       keyDiv.appendChild(inputField);
   }
@@ -187,8 +189,9 @@ function readEventsSection(sectionId) {
       // Read text inputs and number inputs
       const inputs = eventDiv.querySelectorAll('input');
       inputs.forEach((input) => {
-          const idComponents = input.id.split('_');
+          const idComponents = input.id.split('-');
           const key = idComponents[0];
+          
           const value = input.type === 'number' ? parseInt(input.value, 10) : input.value;
           
           if (Array.isArray(event[key])) {
@@ -203,7 +206,7 @@ function readEventsSection(sectionId) {
       // Read textareas (for description)
       const textareas = eventDiv.querySelectorAll('textarea');
       textareas.forEach((textarea) => {
-          const idComponents = textarea.id.split('_');
+          const idComponents = textarea.id.split('-');
           const key = idComponents[0];
           const value = textarea.value.split('\n');
           event[key] = value;
