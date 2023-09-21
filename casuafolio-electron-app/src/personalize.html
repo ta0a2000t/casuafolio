@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Personalize</title>
+    <script defer src="personalization_main.js"></script> <!-- Reference to your JS file -->
+</head>
+<body>
+
+    <h1>Personalize Your Settings</h1>
+    <button id="undoButton">Undo Save</button>
+    <button id="redoButton">Redo Save</button>
+
+    <div id="personalizationForm">
+
+        <fieldset>
+            <legend>Basic Info</legend>
+            
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName"><br>
+
+            <label for="siteTitle">Site Title:</label>
+            <input type="text" id="siteTitle" name="siteTitle"><br>
+
+            <label for="metaDescription">Meta Description:</label>
+            <input type="text" id="metaDescription" name="metaDescription"><br>
+
+            <label for="greeting">Greeting:</label>
+            <input type="text" id="greeting" name="greeting"><br>
+
+            <label for="aboutText">About Text:</label>
+            <textarea id="aboutText" name="aboutText" rows="4" cols="50"></textarea><br>
+
+            <label for="aboutSectionGallerySize">About Section Gallery Size:</label>
+            <input type="number" id="aboutSectionGallerySize" name="aboutSectionGallerySize"><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Social Links</legend>
+            
+            <label for="youtubeLink">YouTube:</label>
+            <input type="text" id="youtubeLink" name="youtubeLink"><br>
+
+            <label for="linkedinLink">LinkedIn:</label>
+            <input type="text" id="linkedinLink" name="linkedinLink"><br>
+
+            <label for="githubLink">GitHub:</label>
+            <input type="text" id="githubLink" name="githubLink"><br>
+
+            <label for="twitterLink">Twitter:</label>
+            <input type="text" id="twitterLink" name="twitterLink"><br>
+
+            <label for="instagramLink">Instagram:</label>
+            <input type="text" id="instagramLink" name="instagramLink"><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Resume and Tab Names</legend>
+
+            <label for="resumeLocation">Resume Location:</label>
+            <input type="text" id="resumeLocation" name="resumeLocation"><br>
+
+            <label for="aboutTabName">About Tab Name:</label>
+            <input type="text" id="aboutTabName" name="aboutTabName"><br>
+
+            <label for="volunteerTabName">Volunteer Tab Name:</label>
+            <input type="text" id="volunteerTabName" name="volunteerTabName"><br>
+
+            <label for="experienceTabName">Experience Tab Name:</label>
+            <input type="text" id="experienceTabName" name="experienceTabName"><br>
+
+            <label for="projectsTabName">Projects Tab Name:</label>
+            <input type="text" id="projectsTabName" name="projectsTabName"><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Page Headlines</legend>
+
+            <label for="experiencePageHeadline">Experience Page Headline:</label>
+            <input type="text" id="experiencePageHeadline" name="experiencePageHeadline"><br>
+
+            <label for="projectsPageHeadline">Projects Page Headline:</label>
+            <input type="text" id="projectsPageHeadline" name="projectsPageHeadline"><br>
+
+            <label for="volunteerPageHeadline">Volunteer Page Headline:</label>
+            <input type="text" id="volunteerPageHeadline" name="volunteerPageHeadline"><br>
+        </fieldset>
+
+        <!-- Dynamic Fields -->
+        <fieldset>
+            <legend>Experience</legend>
+            <div id="experienceEvents">
+
+            </div>
+            <!-- To be populated by JavaScript -->
+        </fieldset>
+
+        <fieldset>
+            <legend>Volunteering</legend>
+            <div id="volunteerEvents">
+
+
+            </div>
+            <!-- To be populated by JavaScript -->
+        </fieldset>
+
+        <fieldset>
+            <legend>Projects</legend>
+            <div  id="projectEvents">
+
+                
+            </div>
+            <!-- To be populated by JavaScript -->
+        </fieldset>
+
+        <button id="save-changes-btn">Save Changes</button>
+
+    </div>
+    
+</body>
+</html>

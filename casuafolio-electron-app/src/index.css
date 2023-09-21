@@ -1,0 +1,50 @@
+html { /*
+NOTE: the background is set in index.js, not here
+  */
+  background-color: #1D1D1D;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+    padding-top: 1em;
+    padding-left: 2em;
+}
+
+button {
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  will-change: box-shadow, transform;
+  background: radial-gradient(100% 100% at 100% 0%, #a00491 0%, #5468FF 100%);
+  box-shadow: 0px 2px 4px rgba(45, 35, 66, 0.4), 0px 7px 13px -3px rgba(45, 35, 66, 0.3), inset 0px -3px 0px rgba(58, 65, 111, 0.5);
+  padding: 0 32px;
+  border-radius: 6px;
+  color: #fff;
+  height: 48px;
+  font-size: 18px;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+button:hover {
+  box-shadow: 0px 4px 8px rgba(102, 38, 110, 0.387), 0px 7px 13px -3px rgba(39, 28, 71, 0.3), inset 0px -3px 0px #3c4fe0;
+  transform: translateY(-2px);
+}
+
+button:active {
+  box-shadow: inset 0px 2px 7px #a237d1;
+  transform: translateY(2px);
+}
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Aligns items to the left */
+  justify-content: center;
+  padding: 20px; /* Adds padding between items */
+}
+
+h1 {
+  color:aliceblue;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
