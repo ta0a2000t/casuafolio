@@ -1,5 +1,6 @@
 // WARNING: DO NOT CHANGE THE NAMES OF THESE VARIABLES.
 // In other words: DO NOT MODIFY ANYTHING TO THE LEFT OF THE '=' SIGN.
+import info from "./personalizationConstants.json";
 
 /******************************************
  * 
@@ -8,35 +9,31 @@
  ******************************************/
 
 // ---- Sub-Section: Personal Information ----
-export var FULL_NAME = "Taha Al-Nufaili"; // PUT YOUR NAME HERE
-export var SITE_TITLE = "Taha🌴🐪"; // displayed on the tab bar of browser.
+export const FULL_NAME = info.FULL_NAME; // PUT YOUR NAME HERE
+export const SITE_TITLE = info.SITE_TITLE; // displayed on the tab bar of browser.
 
 
 // ---- Sub-Section: Site Metadata ----
 // This tells Google what this website is. Example: Taha Al-Nufaili's Portfolio
-export var META_DESCRIPTION = "Taha Al-Nufaili's Portfolio"; 
+export const META_DESCRIPTION = info.META_DESCRIPTION; 
 
 
 // ---- Sub-Section: About Section (aka bio) ----
-export var ABOUT_SECTION_GREETING = "Hala 👋";
-export var ABOUT_SECTION_TEXT = [
-  "I'm in my final undergrad year, but don't let that fool you—I'm all about diving into code, tackling full-stack development, and getting my hands dirty with machine learning. 🤖",
-  "When I'm not in front of my computer, you'll probably find me out exploring or lining up that perfect shot in pool. 🎱",
-  "So, wanna build something cool together? Or maybe a game of pool? Hit me up!🤙"
-];
-export var ABOUT_SECTION_GALLERY_SIZE = 4; // DO NOT COUNT "image0.jpg"
+export const ABOUT_SECTION_GREETING =info.ABOUT_SECTION_GREETING;
+export const ABOUT_SECTION_TEXT = info.ABOUT_SECTION_TEXT;
+export const ABOUT_SECTION_GALLERY_SIZE = info.ABOUT_SECTION_GALLERY_SIZE; // DO NOT COUNT "image0.jpg"
 
 
 
 // ---- Sub-Section: Social and Resume Links ----
 // If you do not want to show any of the below, keep the link empty text, so: ""
-export var YOUTUBE_LINK = "https://www.youtube.com/@tahaalnufaili8838";
-export var LINKEDIN_LINK = "https://www.linkedin.com/in/taha-al-nufaili/";
-export var GITHUB_LINK = "https://github.com/ta0a2000t";
-export var TWITTER_LINK = ""; // NOTE, I am not sharing my twitter here, so i set it to: ""
-export var INSTAGRAM_LINK = "";  
+export const YOUTUBE_LINK = info.YOUTUBE_LINK;
+export const LINKEDIN_LINK = info.LINKEDIN_LINK;
+export const GITHUB_LINK = info.GITHUB_LINK;
+export const TWITTER_LINK = info.TWITTER_LINK; // NOTE, I am not sharing my twitter here, so i set it to: ""
+export const INSTAGRAM_LINK = info.INSTAGRAM_LINK;  
 
-export var RESUME_LOCATION = "./Fall2023_Resume_Taha_Al_Nufaili.pdf"
+export const RESUME_LOCATION = info.RESUME_LOCATION;
             // example "./resume.pdf" #NOTE: . means in the "public" folder
             // RESUME_LOCATION could be also a URL to some website that holds you resume.
 
@@ -47,12 +44,12 @@ export var RESUME_LOCATION = "./Fall2023_Resume_Taha_Al_Nufaili.pdf"
 // Example: Change "About" to alternative names like "Bio" or "Me."
 // Another Example: Change "Experience" to "Education", or "Random", or anything.
 // WARNING: DO NOT MODIFY ANYTHING TO THE LEFT OF THE '=' SIGN.
-export var ABOUT_TAB_NAME = "About"
+export const ABOUT_TAB_NAME = info.ABOUT_TAB_NAME;
 
 // tab button names:
-export var VOLUNTEER_TAB_NAME = "Volunteer"
-export var EXPERIENCE_TAB_NAME = "Experience"
-export var PROJECTS_TAB_NAME = "Projects"
+export const VOLUNTEER_TAB_NAME = info.VOLUNTEER_TAB_NAME;
+export const EXPERIENCE_TAB_NAME = info.EXPERIENCE_TAB_NAME;
+export const PROJECTS_TAB_NAME = info.PROJECTS_TAB_NAME;
 
 
 
@@ -66,9 +63,9 @@ export var PROJECTS_TAB_NAME = "Projects"
  ******************************************/
 
 // headlines:
-export var EXPERIENCE_PAGE_HEADLINE = "My Experiences 🛶"
-export var PROJECTS_PAGE_HEADLINE = "My Projects 🛠"
-export var VOLUNTEER_PAGE_HEADLINE = "My Volunteer Work 🤝"
+export const EXPERIENCE_PAGE_HEADLINE = info.EXPERIENCE_PAGE_HEADLINE;
+export const PROJECTS_PAGE_HEADLINE = info.PROJECTS_PAGE_HEADLINE;
+export const VOLUNTEER_PAGE_HEADLINE = info.VOLUNTEER_PAGE_HEADLINE;
 
 
 /*
@@ -88,93 +85,12 @@ What an event looks like:
 
 // ---- Sub-Section: Experience Events ----
 // make sure to sort them; topmost is your most recent
-export var EXPERIENCE_EVENTS = [
-  {
-    title: "Your Company Name",
-    event_name: "Your Position",
-    date: 'Your Date Range',
-    description: ["Task or achievement 1", "Task or achievement 2"],
-    skills: ["Skill 1", "Skill 2"],
-    directory: './experiences_images/folder_of_this_event/',
-    gallery_size: 0,
-    link: "Your Link"
-  },
-  {
-    title: "NASA Harvest",
-    event_name: "Machine Learning Intern",
-    date: 'Feb 2023 - May 2023',
-    description: [
-      "Employed Google Earth Engine API to split labeled 1-year image composites into 3-week intervals, overlayed coordinates, and exported imagery to Google Drive.",
-      "Utilized Random Upsampling to balance data, then built a 1D CNN model in TensorFlow and evaluated using F-1 scores."
-    ],
-    skills: ["Google Earth Engine API", "TensorFlow", "Data Preprocessing", "F-1 Score Evaluation"],
-    directory: './experiences_images/nasa_harvest',
-    gallery_size: 5, // There are five images in the scrollable gallery 
-    link: "https://www.timeshighered-events.com/gsd-congress-2023/agenda/speakers/3050569"
-  },
-  {
-    title: "Dareen Mall Co",
-    event_name: "Professional Mall Explorer",
-    date: 'Apr 2011 - May 2012',
-    description: [
-      "Walked around Dareen Mall a lot, showing folks the quickest ways to find good sales.",
-      "Taught a small team how to dodge crowds and get to the food court fast.",
-      "Made a simple chart to show the best times to go to the mall."
-    ],
-    skills: ["Teamwork", "Walking Fast", "Good Timing", "Finding Sales"],
-    directory: './experiences_images/dareen_mall_co/', // dareen_mall_co folder: logo.png, image1.jpg, image2.jpg
-    gallery_size: 2,  // Because there are two pictures in the gallery
-    link: ""
-  }
-]
+export const EXPERIENCE_EVENTS = info.EXPERIENCE_EVENTS;
 
 // ---- Sub-Section: Volunteer Events ----
 // make sure to sort them; topmost is your most recent
-export var VOLUNTEER_EVENTS = [
-  {
-    title: "Your Volunteer Event",
-    event_name: "Your Role",
-    date: 'Your Date',
-    description: ["Task or achievement 1"],
-    skills: ["Skill 1", "Skill 2"],
-    directory: './volunteering_images/folder_of_this_event/',
-    gallery_size: 0,
-    link: "Your Link"
-  },
-  {
-    title: "Bitcamp Hackathon",
-    event_name: "Mentoring at Bitcamp Hackathon",
-    date: 'Apr 2023',
-    description: ["Helped participants with app design..."],
-    skills: ["Mentoring", "Machine Learning"],
-    directory: './volunteering_images/bitcamp/',
-    gallery_size: 2,
-    link: ""
-  }
-]
+export const VOLUNTEER_EVENTS = info.VOLUNTEER_EVENTS;
 
 // ---- Sub-Section: Project Events ----
 // make sure to sort them; topmost is your most recent
-export var PROJECT_EVENTS = [
-  {
-    title: "Your Project Title",
-    event_name: "Your Project Event",
-    date: 'Your Date Range',
-    description: ["Task or achievement 1", "Task or achievement 2"],
-    skills: ["Skill 1", "Skill 2"],
-    directory: './projects_images/folder_of_this_event/',
-    gallery_size: 0,
-    link: "Your Link"
-  },
-
-  {
-    title: "Pygame - Pong Replica",
-    event_name: "Game Development",
-    date: "June 2020",
-    description: ["Created my first game, a replica of Pong, using Python and Pygame."],
-    skills: ["Python", "Pygame"],
-    gallery_size: 2,
-    directory: "./projects_images/pong_replica/",
-    link: "https://www.youtube.com/shorts/pCsyJK2JL6g"
-  }
-]
+export const PROJECT_EVENTS = info.PROJECT_EVENTS;
