@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Skill</title>
+</head>
+<body>
+    <h1>Add New Skill</h1>
+    <input type="text" id="newSkill" placeholder="New Skill">
+    <button id="submitSkill">Submit</button>
+    <button id="cancelSkill">Cancel</button>
+
+    <script>
+        document.getElementById('submitSkill').addEventListener('click', function() {
+            const skill = document.getElementById('newSkill').value.trim();
+            if (skill.length < 2) {
+                alert('Skill should have at least 2 non-space characters.');
+                return;
+            }
+            window.opener.addSkill(skill);
+            window.close();
+        });
+
+        document.getElementById('cancelSkill').addEventListener('click', function() {
+            window.close();
+        });
+    </script>
+</body>
+</html>

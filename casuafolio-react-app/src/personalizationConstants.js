@@ -8,35 +8,35 @@
  ******************************************/
 
 // ---- Sub-Section: Personal Information ----
-export const FULL_NAME = "Taha Al-Nufaili"; // PUT YOUR NAME HERE
-export const SITE_TITLE = "Taha🌴🐪"; // displayed on the tab bar of browser.
+export var FULL_NAME = "Taha Al-Nufaili"; // PUT YOUR NAME HERE
+export var SITE_TITLE = "Taha🌴🐪"; // displayed on the tab bar of browser.
 
 
 // ---- Sub-Section: Site Metadata ----
 // This tells Google what this website is. Example: Taha Al-Nufaili's Portfolio
-export const META_DESCRIPTION = "Taha Al-Nufaili's Portfolio"; 
+export var META_DESCRIPTION = "Taha Al-Nufaili's Portfolio"; 
 
 
 // ---- Sub-Section: About Section (aka bio) ----
-export const ABOUT_SECTION_GREETING = "Hala 👋";
-export const ABOUT_SECTION_TEXT = [
+export var ABOUT_SECTION_GREETING = "Hala 👋";
+export var ABOUT_SECTION_TEXT = [
   "I'm in my final undergrad year, but don't let that fool you—I'm all about diving into code, tackling full-stack development, and getting my hands dirty with machine learning. 🤖",
   "When I'm not in front of my computer, you'll probably find me out exploring or lining up that perfect shot in pool. 🎱",
   "So, wanna build something cool together? Or maybe a game of pool? Hit me up!🤙"
 ];
-export const ABOUT_SECTION_GALLERY_SIZE = 4; // DO NOT COUNT "image0.jpg"
+export var ABOUT_SECTION_GALLERY_SIZE = 4; // DO NOT COUNT "image0.jpg"
 
 
 
 // ---- Sub-Section: Social and Resume Links ----
 // If you do not want to show any of the below, keep the link empty text, so: ""
-export const YOUTUBE_LINK = "https://www.youtube.com/@tahaalnufaili8838";
-export const LINKEDIN_LINK = "https://www.linkedin.com/in/taha-al-nufaili/";
-export const GITHUB_LINK = "https://github.com/ta0a2000t";
-export const TWITTER_LINK = ""; // NOTE, I am not sharing my twitter here, so i set it to: ""
-export const INSTAGRAM_LINK = "";  
+export var YOUTUBE_LINK = "https://www.youtube.com/@tahaalnufaili8838";
+export var LINKEDIN_LINK = "https://www.linkedin.com/in/taha-al-nufaili/";
+export var GITHUB_LINK = "https://github.com/ta0a2000t";
+export var TWITTER_LINK = ""; // NOTE, I am not sharing my twitter here, so i set it to: ""
+export var INSTAGRAM_LINK = "";  
 
-export const RESUME_LOCATION = "./Fall2023_Resume_Taha_Al_Nufaili.pdf"
+export var RESUME_LOCATION = "./Fall2023_Resume_Taha_Al_Nufaili.pdf"
             // example "./resume.pdf" #NOTE: . means in the "public" folder
             // RESUME_LOCATION could be also a URL to some website that holds you resume.
 
@@ -47,12 +47,12 @@ export const RESUME_LOCATION = "./Fall2023_Resume_Taha_Al_Nufaili.pdf"
 // Example: Change "About" to alternative names like "Bio" or "Me."
 // Another Example: Change "Experience" to "Education", or "Random", or anything.
 // WARNING: DO NOT MODIFY ANYTHING TO THE LEFT OF THE '=' SIGN.
-export const ABOUT_TAB_NAME = "About"
+export var ABOUT_TAB_NAME = "About"
 
 // tab button names:
-export const VOLUNTEER_TAB_NAME = "Volunteer"
-export const EXPERIENCE_TAB_NAME = "Experience"
-export const PROJECTS_TAB_NAME = "Projects"
+export var VOLUNTEER_TAB_NAME = "Volunteer"
+export var EXPERIENCE_TAB_NAME = "Experience"
+export var PROJECTS_TAB_NAME = "Projects"
 
 
 
@@ -66,9 +66,9 @@ export const PROJECTS_TAB_NAME = "Projects"
  ******************************************/
 
 // headlines:
-export const EXPERIENCE_PAGE_HEADLINE = "My Experiences 🛶"
-export const PROJECTS_PAGE_HEADLINE = "My Projects 🛠"
-export const VOLUNTEER_PAGE_HEADLINE = "My Volunteer Work 🤝"
+export var EXPERIENCE_PAGE_HEADLINE = "My Experiences 🛶"
+export var PROJECTS_PAGE_HEADLINE = "My Projects 🛠"
+export var VOLUNTEER_PAGE_HEADLINE = "My Volunteer Work 🤝"
 
 
 /*
@@ -88,7 +88,7 @@ What an event looks like:
 
 // ---- Sub-Section: Experience Events ----
 // make sure to sort them; topmost is your most recent
-export const EXPERIENCE_EVENTS = [
+export var EXPERIENCE_EVENTS = [
   {
     title: "Your Company Name",
     event_name: "Your Position",
@@ -130,7 +130,7 @@ export const EXPERIENCE_EVENTS = [
 
 // ---- Sub-Section: Volunteer Events ----
 // make sure to sort them; topmost is your most recent
-export const VOLUNTEER_EVENTS = [
+export var VOLUNTEER_EVENTS = [
   {
     title: "Your Volunteer Event",
     event_name: "Your Role",
@@ -155,7 +155,7 @@ export const VOLUNTEER_EVENTS = [
 
 // ---- Sub-Section: Project Events ----
 // make sure to sort them; topmost is your most recent
-export const PROJECT_EVENTS = [
+export var PROJECT_EVENTS = [
   {
     title: "Your Project Title",
     event_name: "Your Project Event",
