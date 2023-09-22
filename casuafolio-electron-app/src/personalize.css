@@ -11,7 +11,7 @@
 
 /* Dark Mode Styles */
 body {
-    background-color: #181818; /* Slightly lighter dark */
+    background-color: #1D1D1D; /* Slightly lighter dark */
     color: #eeeeee; /* More readable light gray */
 }
 
@@ -86,7 +86,7 @@ input, textarea {
     min-width: 4em;
     color: rgb(255, 255, 255);
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    background-color: #181818;
+    background-color: #1D1D1D;
 }
 
 /* Dynamic Fields Styles */
@@ -102,7 +102,7 @@ input, textarea {
 }
 
 .eventDiv:hover {
-    background-color: #282828; /
+    background-color: #000000; /
 }
 
 .eventDiv:hover .skillsDiv {
@@ -156,7 +156,7 @@ input, textarea {
     width: 100%;
 
 
-    background-color: #181818be;
+    background-color: #1d1d1dbe;
     
 }
 
@@ -164,7 +164,7 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #181818be;
+    background-color: #1d1d1dbe;
     font-size: 15px;
 
     padding-left: 2em;

@@ -1,4 +1,10 @@
 
+function prepend(value, array) {
+  var newArray = array.slice();
+  newArray.unshift(value);
+  return newArray;
+}
+
 
 // Function to add a delete button to an event
 function addEventDeleteButton(eventDiv, index, sectionInfo, sectionId) {
@@ -19,6 +25,10 @@ function addEventDeleteButton(eventDiv, index, sectionInfo, sectionId) {
 
 // Function to add a new event
 function addNewEvent(sectionInfo, sectionId) {
+  // Reading the existing events from the section
+  const existingEvents = readEventsSection(sectionId);
+  sectionInfo = [...existingEvents];
+
   const newEvent = {
     title: 'Your Company Name',
     event_name: 'Your Position',
@@ -29,7 +39,11 @@ function addNewEvent(sectionInfo, sectionId) {
     gallery_size: 0,
     link: 'Your Link'
   };
-  sectionInfo.push(newEvent);
+
+  // Prepend new event to the sectionInfo array
+  sectionInfo = prepend(newEvent, sectionInfo);
+
+  // Recreate the events section with the updated sectionInfo
   createEventsSection(sectionInfo, sectionId);
 }
 
@@ -44,7 +58,7 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
 
   // Create title for each event
   const eventTitle = document.createElement('h3');
-  eventTitle.textContent = `Event ${index + 1}`; 
+  eventTitle.textContent = `Event ${sectionInfo.length - index}`; 
   eventDiv.appendChild(eventTitle);
 
   // Loop through keys in each event
@@ -174,7 +188,7 @@ const createEventsSection = (sectionInfo, sectionId) => {
   sectionDiv.appendChild(addButton);
 
   // Loop through each event in reverse
-  for (let index = sectionInfo.length - 1 ; index >= 0; index--) {
+  for (let index =  0 ; index < sectionInfo.length; index++) {
       const event = sectionInfo[index];
       const eventDiv = createEventDiv(event, index, sectionInfo, sectionId);
       sectionDiv.appendChild(eventDiv);
