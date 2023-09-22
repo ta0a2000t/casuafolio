@@ -3,7 +3,7 @@ const path = require('path');
 const { populateForm, isValidForm, readForm } = require('./personalize_scripts/form_management');
 const { history, undoChanges, redoChanges , setInfo} = require('./personalize_scripts/undo_redo_management');
 
-const relativePathToPersonalizationConstants = "casuafolio-react-app/src/personalizationConstants.json";
+const relativePathToPersonalizationConstants = path.join("casuafolio-react-app", "src", "personalizationConstants.json");
 
 fs.readFile(relativePathToPersonalizationConstants, 'utf8', (err, data) => {
   if (err) {

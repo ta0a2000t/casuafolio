@@ -5,6 +5,28 @@ function prepend(value, array) {
   return newArray;
 }
 
+const fs = require('fs');
+const path = require('path');
+
+function createFolder(folderName) {
+  const folderPath = path.join(__dirname, "..", "..", "casuafolio-react-app", "public", "events_images", folderName);
+  fs.mkdir(folderPath, { recursive: true }, (err) => {
+    if (err) throw err;
+    
+    console.log(`Folder ${folderPath} created`);
+  });
+}
+
+function removeFolder(folderName) {
+  const folderPath = path.join(__dirname, "..", "..", "casuafolio-react-app", "public", "events_images", folderName);
+  fs.rm(folderPath, { recursive: true }, (err) => {
+    if (err) throw err;
+    console.log(`Folder ${folderPath} removed`);
+  });
+}
+
+
+
 
 // Function to add a delete button to an event
 function addEventDeleteButton(eventDiv, index, sectionInfo, sectionId) {
@@ -13,11 +35,16 @@ function addEventDeleteButton(eventDiv, index, sectionInfo, sectionId) {
   deleteButton.classList.add("event-delete-btn")
   deleteButton.addEventListener('click', () => {
     eventDiv.classList.add('fade-out');
-  
+
+    
+
     setTimeout(() => {
+      removeFolder(sectionInfo[index].folder_name);
+
       sectionInfo.splice(index, 1);
       createEventsSection(sectionInfo, sectionId);
     }, 500);
+
   });
   
   eventDiv.appendChild(deleteButton);
@@ -39,6 +66,15 @@ function addNewEvent(sectionInfo, sectionId) {
     gallery_size: 0,
     link: 'Your Link'
   };
+
+  // Combining the title, timestamp, and a random number to form a unique folder name
+  const folderName = `${newEvent.title.replace(/\s+/g, '_')}_${Date.now()}_${Math.floor(Math.random() * 1000000)}`;
+  createFolder(folderName);
+
+  // Storing the folderName in the event object
+  newEvent.folder_name = folderName;
+
+
 
   // Prepend new event to the sectionInfo array
   sectionInfo = prepend(newEvent, sectionInfo);
@@ -63,6 +99,7 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
 
   // Loop through keys in each event
   Object.keys(event).forEach((key) => {
+
     const keyDiv = document.createElement('div');
     keyDiv.classList.add('keyDiv');
 
@@ -153,10 +190,17 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
         });
     } else {
         const inputField = document.createElement('input');
-        inputField.type = 'text';
+        if (key === "folder_name") {
+          inputField.type = 'hidden';
+        } else {
+          inputField.type = 'text';
+        }
+
         inputField.id = `${key}-${index}`;
         inputField.value = event[key];
         keyDiv.appendChild(inputField);
+
+        
     }
 
     eventDiv.appendChild(keyDiv);
