@@ -5,8 +5,25 @@
     <title>CasuaFolio</title>
     <link rel="stylesheet" href="index.css" />
     <link rel="stylesheet" href="tooltip.css" />
+    <link rel="import" href="personalization_split_preview.html" />
 
     <script defer src="render.js"></script>
+    <script>
+      window.$ = window.jquery = require("jquery");
+      window.popper = require("popper.js");
+      require("bootstrap");
+      require("./renderer.js");
+
+
+      const links = document.querySelectorAll('link[rel="import"]');
+      links.forEach((link) => {
+      let template = link.import.querySelector("template");
+      let clone = document.importNode(template.content, true);
+      let target = clone.querySelector(".template").dataset.tab;
+      document.getElementById(target).appendChild(clone);
+       });
+    </script>
+
   </head>
   <body class="content">
     <h1>Customize Your Web Portfolio</h1>

@@ -1,4 +1,5 @@
 const { writeFile } = require('fs');
+const { app, BrowserWindow, dialog, ipcRenderer } = require('electron');
 
 // Global states
 
@@ -47,8 +48,19 @@ livePreviewBtn.onclick = e => {
 const personalizeBtn = document.getElementById('personalizeBtn');
 personalizeBtn.onclick = e => {
   //  personalizeBtn.innerText = 'Recording';
-  console.log(3)
+  //console.log(3)
 };
 
 
 
+function requestImage() {
+  ipcRenderer.send('file-request');
+}
+
+//upon receiving a file, process accordingly
+ipcRenderer.on('file', (event, file) => {
+  console.log('obtained file from main process: ' + file);
+});
+
+
+  

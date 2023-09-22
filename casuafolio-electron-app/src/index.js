@@ -1,5 +1,5 @@
 
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain} = require('electron');
 const path = require('path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -19,7 +19,7 @@ const createWindow = () => {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      enableRemoteModule: true,
+      enableRemoteModule: true
     },
 
   });
@@ -89,6 +89,63 @@ app.on('window-all-closed', () => {
 // code. You can also put them in separate files and import them here.
 
 app.disableHardwareAcceleration();
+
+
+
+
+
+ipcMain.on('file-request', (event) => {  
+  // If the platform is 'win32' or 'Linux'
+  if (process.platform !== 'darwin') {
+    // Resolves to a Promise<Object>
+    dialog.showOpenDialog({
+      title: 'Select the File to be uploaded',
+      defaultPath: path.join(__dirname, '../assets/'),
+      buttonLabel: 'Upload Image',
+      // Restricting the user to only Text Files.
+      filters: [ 
+        { name: 'Images', extensions: ['jpg', 'png', 'gif'] },
+         ],
+      // Specifying the File Selector Property
+      properties: ['openFile']
+    }).then(file => {
+      // Stating whether dialog operation was
+      // cancelled or not.
+      console.log(file.canceled);
+      if (!file.canceled) {
+        const filepath = file.filePaths[0].toString();
+        console.log(filepath);
+        event.reply('file', filepath);
+      }  
+    }).catch(err => {
+      console.log(err)
+    });
+  }
+  else {
+    // If the platform is 'darwin' (macOS)
+    dialog.showOpenDialog({
+      title: 'Select the File to be uploaded',
+      defaultPath: path.join(__dirname, '../assets/'),
+      buttonLabel: 'Upload Image',
+      filters: [ 
+        { name: 'Images', extensions: ['jpg', 'png', 'gif'] },
+         ],
+      // Specifying the File Selector and Directory 
+      // Selector Property In macOS
+      properties: ['openFile', 'openDirectory']
+    }).then(file => {
+      console.log(file.canceled);
+      if (!file.canceled) {
+      const filepath = file.filePaths[0].toString();
+      console.log(filepath);
+      event.reply('file', filepath);
+    }  
+  }).catch(err => {
+      console.log(err)
+    });
+  }
+});
+
 
 
 

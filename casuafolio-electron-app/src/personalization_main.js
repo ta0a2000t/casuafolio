@@ -38,3 +38,6 @@ function handleSubmit() {
 document.getElementById('save-changes-btn').addEventListener('click', handleSubmit);
 document.getElementById('undoButton').addEventListener('click', undoChanges);
 document.getElementById('redoButton').addEventListener('click', redoChanges);
+import { requestImage } from require('./renderer.js');
+
+requestImage();

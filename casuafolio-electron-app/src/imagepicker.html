@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <script src="https://js.bytescale.com/upload-widget/v4"></script>
+    <script>
+      // -----
+      // Configuration:
+      // https://www.bytescale.com/docs/upload-widget#configuration
+      // -----
+      const options = {
+        apiKey: "free", // Get API key: https://www.bytescale.com/get-started
+        maxFileCount: 1
+      };
+
+      // import * as Bytescale from "@bytescale/upload-widget";
+      Bytescale.UploadWidget.open(options).then(
+        files => {
+          const fileUrls = files.map(x => x.fileUrl).join("\n");
+          const success = fileUrls.length === 0
+            ? "No file selected."
+            : `File uploaded:\n\n${fileUrls}`;
+          alert(success);
+        },
+        error => {
+          alert(error);
+        }
+      );
+    </script>
+  </head>
+  <body></body>
+</html>
