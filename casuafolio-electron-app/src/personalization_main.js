@@ -1,43 +1,40 @@
 const fs = require('fs');
 const path = require('path');
-const { populateForm, isValidForm, readForm} = require('./personalize_scripts/form_management');
-const { history, undoChanges, redoChanges} = require('./personalize_scripts/undo_redo_management');
-const { relativePathToPersonalizationConstants } = require('./personalize_scripts/utilities');
-const { setInfo } = require('./personalize_scripts/utilities');
+const { populateForm, isValidForm, readForm } = require('./personalize_scripts/form_management');
+const { history, undoChanges, redoChanges , setInfo} = require('./personalize_scripts/undo_redo_management');
 
+const relativePathToPersonalizationConstants = "casuafolio-react-app/src/personalizationConstants.json";
 
 fs.readFile(relativePathToPersonalizationConstants, 'utf8', (err, data) => {
   if (err) {
     console.error("Could not read file", err);
     return;
   }
-  info = JSON.parse(data);
-  history.save();
+  const info = JSON.parse(data);
+  setInfo(info); // Correctly set the initial info state
+  history.save(); // Save the initial state
   populateForm(info);
 });
 
 function handleSubmit() {
-  let info = readForm();
-  const validationResult = isValidForm(info);
-  if (validationResult.valid === true) {
-    history.save();
-
-    // Perform file write operation
+  const info = readForm();
+  if (isValidForm(info).valid) {
+    setInfo(info); // Set the new state
+    history.save(); // Save the new state
+    
     fs.writeFile(relativePathToPersonalizationConstants, JSON.stringify(info), (err) => {
       if (err) {
-        alert("Error While Saving")
+        alert("Error While Saving");
         console.error("Could not write to file", err);
         return;
       }
-
-      alert("Successfully Saved :) ");
+      alert("Successfully Saved :)");
     });
   } else {
-    alert("Saving Failed :(  ".concat(validationResult.message))
+    alert("Saving Failed :(");
   }
 }
 
-document.getElementById('save-changes-btn').addEventListener('click', handleSubmit)
-
+document.getElementById('save-changes-btn').addEventListener('click', handleSubmit);
 document.getElementById('undoButton').addEventListener('click', undoChanges);
-document.getElementById('redoButton').addEventListener('click', redoChanges); 
+document.getElementById('redoButton').addEventListener('click', redoChanges);

@@ -1,16 +1,24 @@
 const SimpleUndo = require('simple-undo');
-const { getInfo } = require('./utilities');
 
-const info = getInfo();
 
+let sharedInfo = null;
+
+function setInfo(info) {
+  sharedInfo = info;
+}
+
+function getInfo() {
+  return sharedInfo;
+}
 
 function myObjectSerializer(done) {
-  done(JSON.stringify(info));
+  done(JSON.stringify(sharedInfo));
 }
 
 function myObjectUnserializer(serialized) {
-  info2 = JSON.parse(serialized);
-  populateForm(info2);  // Repopulate the form based on the new state
+  info = JSON.parse(serialized);
+  setInfo(info); // Set the newly deserialized info
+  populateForm(info);  // Repopulate the form based on the new state
 }
 
 const history = new SimpleUndo({
@@ -20,20 +28,22 @@ const history = new SimpleUndo({
 
 // Undo Functionality
 function undoChanges() {
-  if (history.count() > 1 ) {
-      history.undo(myObjectUnserializer);
+  if (history.count() > 1) {
+    history.undo(myObjectUnserializer);
   }
 }
 
 // Redo Functionality
 function redoChanges() {
-  if (history.count() > 1 ) {
-      history.redo(myObjectUnserializer);
+  if (history.count() > 1) {
+    history.redo(myObjectUnserializer);
   }
 }
 
 module.exports = {
   history,
   undoChanges,
-  redoChanges
+  redoChanges,
+  setInfo,
+  getInfo
 };

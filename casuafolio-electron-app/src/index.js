@@ -14,7 +14,7 @@ const createWindow = () => {
     backgroundColor: "#1D1D1D",
     width: 800,
     height: 600,
-    minWidth: 700,
+    minWidth: 740,
     minHeight: 500,
     webPreferences: {
       nodeIntegration: true,
@@ -35,10 +35,25 @@ const createWindow = () => {
 };
 
 
-ipcMain.handle('add-skill', async (event, skill) => {
-    // Logic to add the skill, perhaps save it to a file or whatever you need
-    // You can return a value here, which will be sent back to the renderer process
+
+// Handling read file
+ipcMain.handle('read-json', async (event, filePath) => {
+  try {
+    const data = fs.readFileSync(filePath, 'utf8');
+    return data;
+  } catch (err) {
+    throw err;
+  }
+});
+
+// Handling write file
+ipcMain.handle('write-json', async (event, filePath, data) => {
+  try {
+    fs.writeFileSync(filePath, data, 'utf8');
     return true;
+  } catch (err) {
+    throw err;
+  }
 });
 
 
@@ -74,3 +89,6 @@ app.on('window-all-closed', () => {
 // code. You can also put them in separate files and import them here.
 
 app.disableHardwareAcceleration();
+
+
+

@@ -160,7 +160,7 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
 
   
 
-// Main function to create the section
+// Main function to create the event section ( multiple events inside)
 const createEventsSection = (sectionInfo, sectionId) => {
   const sectionDiv = document.getElementById(sectionId);
   sectionDiv.innerHTML = '';

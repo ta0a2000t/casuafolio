@@ -20,6 +20,7 @@ body {
 }
 
 
+
 /* Reset CSS */
 * {
     box-sizing: border-box;
@@ -99,6 +100,16 @@ input, textarea {
 .eventDiv {
     margin-top: 2em;
 }
+
+.eventDiv:hover {
+    background-color: #282828; /
+}
+
+.eventDiv:hover .skillsDiv {
+    background-color: inherit; /* Styling for skillsDiv when eventDiv is hovered over */
+}
+
+
 
 .keyDiv {
     margin-bottom: 10px;
