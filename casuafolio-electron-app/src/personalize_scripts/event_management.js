@@ -5,10 +5,8 @@ function prepend(value, array) {
   return newArray;
 }
 
-const fs = require('fs');
-const path = require('path');
-
 function createFolder(folderName) {
+
   const folderPath = path.join(__dirname, "..", "..", "casuafolio-react-app", "public", "events_images", folderName);
   fs.mkdir(folderPath, { recursive: true }, (err) => {
     if (err) throw err;
@@ -24,6 +22,103 @@ function removeFolder(folderName) {
     console.log(`Folder ${folderPath} removed`);
   });
 }
+
+// sourcePath example: '/Users/tahaal/Desktop/casuafolio_one_to_one_logo.png'
+async function copyImageToFolder0(sourcePath, destinationFolder) {
+  try {
+    // Extract the image name from the source path
+    const imageName = path.basename(sourcePath);
+    
+    // Define the destination path
+    const destinationPath = path.join(destinationFolder, `img${Date.now()}_${Math.floor(Math.random() * 1000000)}`.concat(imageName));
+    console.log(sourcePath)
+    console.log(destinationFolder)
+    console.log("^^^^^^^^^^^^^^^^^^^^^^^^")
+
+    // Ensure the destination folder exists
+    //await fs.mkdir(destinationFolder, { recursive: true });
+    
+    // Read the file from the source path
+    const fileData = await fs.readFile(sourcePath);
+    console.log(fileData)
+    // Write the file to the destination path
+    fs.writeFileSync(destinationPath, fileData, function(err) {
+      if (err) throw err;
+        console.log(`Image copied to ${destinationPath}`);
+    });
+    
+  } catch (error) {
+    console.error('Error copying image:', error);
+  }
+}
+
+async function copyImageToFolder(sourcePath, destinationFolder) {
+  try {
+    // Extract the image name from the source path
+    const imageName = path.basename(sourcePath);
+    
+    // Define the destination path
+    const destinationPath = path.join(destinationFolder, imageName);
+    
+    // Ensure the destination folder exists    
+    // Read the file from the source path
+    const fileData = fs.readFileSync(sourcePath); // note: no encoding is specified
+
+    console.log(fileData)
+    console.log("wwwwwww")
+    
+    // Write the file to the destination path
+    fs.writeFileSync(destinationPath, fileData); // writing file synchronously
+    
+
+
+  } catch (error) {
+    console.error('Error copying image:', error);
+  }
+}
+
+
+function processNewImage(imgSourcePath, folder_name_of_addedImage, galleryDivID_of_addedImage) {  
+  console.log("190228")
+  console.log(folder_name_of_addedImage);
+  console.log(galleryDivID_of_addedImage);
+  let galleryDiv_of_addedImage = document.getElementById(galleryDivID_of_addedImage);
+  console.log(galleryDiv_of_addedImage.id)
+
+  galleryDiv_of_addedImage.id = galleryDiv_of_addedImage.id.slice(0, galleryDiv_of_addedImage.id.length - 3); // remove "new"
+  console.log(galleryDiv_of_addedImage.id)
+  console.log(folder_name_of_addedImage)
+
+  let destinationFolder = path.join(__dirname, "..", "casuafolio-react-app", "public", "events_images", folder_name_of_addedImage);
+  console.log(destinationFolder)
+  console.log("^^^^")
+  copyImageToFolder(imgSourcePath, destinationFolder);
+  
+
+  // creating image and inserting it into gallery div ////
+  const imgContainer = document.createElement('div');
+  imgContainer.className = 'image-container';
+
+  const img = document.createElement('img');
+  img.src = path.relative(__dirname, path.join(destinationFolder, path.basename(imgSourcePath)));
+  img.alt = `Newly Added Image`;
+  img.className = 'gallery-image';
+
+  const removeButton = document.createElement('button');
+
+  removeButton.innerText = 'x';
+  removeButton.classList.add("skill-delete-btn");
+  removeButton.addEventListener('click', () => {
+    galleryDiv_of_addedImage.removeChild(imgContainer);
+  });
+
+  imgContainer.appendChild(img);
+  imgContainer.appendChild(removeButton);
+  galleryDiv_of_addedImage.appendChild(imgContainer);
+  /////////////
+
+};
+
 
 
 
@@ -62,13 +157,12 @@ function addNewEvent(sectionInfo, sectionId) {
     date: 'Your Date Range',
     description: ['Task or achievement 1', 'Task or achievement 2'],
     skills: ['Skill 1', 'Skill 2'],
-    directory: './your_images_folder/',
-    gallery_size: 0,
+    gallery: [],
     link: 'Your Link'
   };
 
   // Combining the title, timestamp, and a random number to form a unique folder name
-  const folderName = `${newEvent.title.replace(/\s+/g, '_')}_${Date.now()}_${Math.floor(Math.random() * 1000000)}`;
+  const folderName = `event_images_${Date.now()}_${Math.floor(Math.random() * 1000000)}`;
   createFolder(folderName);
 
   // Storing the folderName in the event object
@@ -114,13 +208,51 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
         textArea.id = `${key}-${index}`;
         textArea.value = event[key].join('\n'); // Join array into a multi-line string
         keyDiv.appendChild(textArea);
-    } else if (key === "gallery_size") {
-        const inputField = document.createElement('input');
-        inputField.type = 'number';
-        inputField.id = `${key}-${index}`;
-        inputField.value = event[key];
-        keyDiv.appendChild(inputField);
-    } else if (key === 'skills') {
+    } else if (key === "gallery") {
+      const galleryDiv = document.createElement('div');
+      galleryDiv.id = `gallery-${index}`;
+      galleryDiv.className = 'gallery-container';
+  
+      event[key].forEach((path, imgIndex) => {
+          const imgContainer = document.createElement('div');
+          imgContainer.className = 'image-container';
+  
+          const img = document.createElement('img');
+          img.src = path;
+          img.alt = `Image ${imgIndex}`;
+          img.className = 'gallery-image';
+  
+          const removeButton = document.createElement('button');
+          removeButton.classList.add("skill-delete-btn");
+          removeButton.innerText = 'x';
+          removeButton.addEventListener('click', () => {
+              galleryDiv.removeChild(imgContainer);
+          });
+  
+          imgContainer.appendChild(img);
+          imgContainer.appendChild(removeButton);
+          galleryDiv.appendChild(imgContainer);
+      });
+  
+      const addButton = document.createElement('button');
+      addButton.innerText = '+';
+      addButton.addEventListener('click', () => {
+          // Handle adding new images, e.g. open a dialog to select a new image and append it to galleryDiv
+          // After the user selects a new image, create new img and imgContainer elements and append them to galleryDiv
+          console.log(11)
+          console.log( galleryDiv.id)
+          console.log(99)
+          galleryDiv.id = galleryDiv.id.concat("new");
+          let galleryDivID_of_addedImage = galleryDiv.id;
+          let folder_name_of_addedImage = event.folder_name;
+          console.log(event)
+          requestImage(folder_name_of_addedImage, galleryDivID_of_addedImage)
+
+      });
+  
+      keyDiv.appendChild(galleryDiv);
+      keyDiv.appendChild(addButton); // Append outside of the galleryDiv
+  } else if (key === 'skills') {
       const skillsDiv = document.createElement('div');
       skillsDiv.classList.add('skillsDiv');
   
@@ -214,7 +346,37 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
 }
 
 
-  
+function readEventDiv(eventDiv){
+  const event = {}; // Initialize an empty event object
+
+  // Read text inputs and number inputs
+  const inputs = eventDiv.querySelectorAll('input');
+  inputs.forEach((input) => {
+      const idComponents = input.id.split('-');
+      const key = idComponents[0];
+      
+      const value = input.type === 'number' ? parseInt(input.value, 10) : input.value;
+      
+      if (Array.isArray(event[key])) {
+          event[key].push(value);
+      } else if (event[key] !== undefined) {
+          event[key] = [event[key], value];
+      } else {
+          event[key] = value;
+      }
+  });
+
+  // Read textareas (for description)
+  const textareas = eventDiv.querySelectorAll('textarea');
+  textareas.forEach((textarea) => {
+      const idComponents = textarea.id.split('-');
+      const key = idComponents[0];
+      const value = textarea.value.split('\n');
+      event[key] = value;
+  });
+
+  return event;
+}
 
   
 
@@ -244,37 +406,8 @@ const createEventsSection = (sectionInfo, sectionId) => {
 function readEventsSection(sectionId) {
   const sectionDiv = document.getElementById(sectionId);
   const eventDivs = sectionDiv.querySelectorAll('.eventDiv');
-  const events = Array.from(eventDivs).map((eventDiv, index) => {
-      const event = {}; // Initialize an empty event object
 
-      // Read text inputs and number inputs
-      const inputs = eventDiv.querySelectorAll('input');
-      inputs.forEach((input) => {
-          const idComponents = input.id.split('-');
-          const key = idComponents[0];
-          
-          const value = input.type === 'number' ? parseInt(input.value, 10) : input.value;
-          
-          if (Array.isArray(event[key])) {
-              event[key].push(value);
-          } else if (event[key] !== undefined) {
-              event[key] = [event[key], value];
-          } else {
-              event[key] = value;
-          }
-      });
-
-      // Read textareas (for description)
-      const textareas = eventDiv.querySelectorAll('textarea');
-      textareas.forEach((textarea) => {
-          const idComponents = textarea.id.split('-');
-          const key = idComponents[0];
-          const value = textarea.value.split('\n');
-          event[key] = value;
-      });
-
-      return event;
-  });
+  const events = Array.from(eventDivs).map(readEventDiv);
 
   return events;
 }

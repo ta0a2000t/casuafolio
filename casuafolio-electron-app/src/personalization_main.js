@@ -1,4 +1,6 @@
-const fs = require('fs');
+var request = require("request").defaults({ encoding: null });
+
+var fs = require('fs');
 const path = require('path');
 const { populateForm, isValidForm, readForm } = require('./personalize_scripts/form_management');
 const { history, undoChanges, redoChanges , setInfo} = require('./personalize_scripts/undo_redo_management');
@@ -33,11 +35,13 @@ function handleSubmit() {
   } else {
     alert("Saving Failed :(");
   }
-}
+};
+
+
+
 
 document.getElementById('save-changes-btn').addEventListener('click', handleSubmit);
 document.getElementById('undoButton').addEventListener('click', undoChanges);
 document.getElementById('redoButton').addEventListener('click', redoChanges);
-import { requestImage } from require('./renderer.js');
 
-requestImage();
+

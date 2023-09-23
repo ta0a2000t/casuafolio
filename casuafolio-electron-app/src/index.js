@@ -19,7 +19,10 @@ const createWindow = () => {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      enableRemoteModule: true
+      enableRemoteModule: true,
+
+      nativeWindowOpen: true
+
     },
 
   });
@@ -94,7 +97,7 @@ app.disableHardwareAcceleration();
 
 
 
-ipcMain.on('file-request', (event) => {  
+ipcMain.on('file-request', (event, folder_name_of_addedImage, galleryDivID_of_addedImage) => {  
   // If the platform is 'win32' or 'Linux'
   if (process.platform !== 'darwin') {
     // Resolves to a Promise<Object>
@@ -138,13 +141,23 @@ ipcMain.on('file-request', (event) => {
       if (!file.canceled) {
       const filepath = file.filePaths[0].toString();
       console.log(filepath);
-      event.reply('file', filepath);
+      event.reply('file', filepath, folder_name_of_addedImage, galleryDivID_of_addedImage);
     }  
   }).catch(err => {
       console.log(err)
     });
   }
 });
+
+
+
+
+
+
+
+
+
+
 
 
 
