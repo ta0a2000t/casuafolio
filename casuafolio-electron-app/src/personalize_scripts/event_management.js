@@ -6,8 +6,8 @@ function prepend(value, array) {
 }
 
 function createFolder(folderName) {
-
-  const folderPath = path.join(__dirname, "..", "..", "casuafolio-react-app", "public", "events_images", folderName);
+  unsavedEventFoldersList.push(folderName);
+  const folderPath = path.join(relativePathTo_events_images, folderName);
   fs.mkdir(folderPath, { recursive: true }, (err) => {
     if (err) throw err;
     
@@ -16,56 +16,22 @@ function createFolder(folderName) {
 }
 
 function removeFolder(folderName) {
-  const folderPath = path.join(__dirname, "..", "..", "casuafolio-react-app", "public", "events_images", folderName);
+  
+  const folderPath = path.join(relativePathTo_events_images, folderName);
   fs.rm(folderPath, { recursive: true }, (err) => {
     if (err) throw err;
     console.log(`Folder ${folderPath} removed`);
+    unsavedEventFoldersList = unsavedEventFoldersList.filter(e => e !== folderName);
   });
 }
 
-// sourcePath example: '/Users/tahaal/Desktop/casuafolio_one_to_one_logo.png'
-async function copyImageToFolder0(sourcePath, destinationFolder) {
-  try {
-    // Extract the image name from the source path
-    const imageName = path.basename(sourcePath);
-    
-    // Define the destination path
-    const destinationPath = path.join(destinationFolder, `img${Date.now()}_${Math.floor(Math.random() * 1000000)}`.concat(imageName));
-    console.log(sourcePath)
-    console.log(destinationFolder)
-    console.log("^^^^^^^^^^^^^^^^^^^^^^^^")
 
-    // Ensure the destination folder exists
-    //await fs.mkdir(destinationFolder, { recursive: true });
+
+async function copyImageToNewLoc(imgSourcePath, destinationPath) {
+  try {
     
     // Read the file from the source path
-    const fileData = await fs.readFile(sourcePath);
-    console.log(fileData)
-    // Write the file to the destination path
-    fs.writeFileSync(destinationPath, fileData, function(err) {
-      if (err) throw err;
-        console.log(`Image copied to ${destinationPath}`);
-    });
-    
-  } catch (error) {
-    console.error('Error copying image:', error);
-  }
-}
-
-async function copyImageToFolder(sourcePath, destinationFolder) {
-  try {
-    // Extract the image name from the source path
-    const imageName = path.basename(sourcePath);
-    
-    // Define the destination path
-    const destinationPath = path.join(destinationFolder, imageName);
-    
-    // Ensure the destination folder exists    
-    // Read the file from the source path
-    const fileData = fs.readFileSync(sourcePath); // note: no encoding is specified
-
-    console.log(fileData)
-    console.log("wwwwwww")
+    const fileData = fs.readFileSync(imgSourcePath); // note: no encoding is specified
     
     // Write the file to the destination path
     fs.writeFileSync(destinationPath, fileData); // writing file synchronously
@@ -78,46 +44,62 @@ async function copyImageToFolder(sourcePath, destinationFolder) {
 }
 
 
-function processNewImage(imgSourcePath, folder_name_of_addedImage, galleryDivID_of_addedImage) {  
-  console.log("190228")
-  console.log(folder_name_of_addedImage);
-  console.log(galleryDivID_of_addedImage);
+
+function deleteImageFile(event_and_image_names) {
+  // let event_and_image_names = path.join(event_folder_name, fileName);
+
+  const folderPath = path.join(relativePathTo_events_images, event_and_image_names);
+  fs.rm(folderPath, { recursive: true }, (err) => {
+    if (err) throw err;
+    console.log(`Image ${folderPath} removed`);
+    unsavedImagesList = unsavedImagesList.filter(e => e !== event_and_image_names);
+  });
+
+}
+
+function processNewImage(imgSourcePath, event_folder_name, galleryDivID_of_addedImage) {  
   let galleryDiv_of_addedImage = document.getElementById(galleryDivID_of_addedImage);
-  console.log(galleryDiv_of_addedImage.id)
-
   galleryDiv_of_addedImage.id = galleryDiv_of_addedImage.id.slice(0, galleryDiv_of_addedImage.id.length - 3); // remove "new"
-  console.log(galleryDiv_of_addedImage.id)
-  console.log(folder_name_of_addedImage)
-
-  let destinationFolder = path.join(__dirname, "..", "casuafolio-react-app", "public", "events_images", folder_name_of_addedImage);
-  console.log(destinationFolder)
-  console.log("^^^^")
-  copyImageToFolder(imgSourcePath, destinationFolder);
   
+  const originalImageName = path.basename(imgSourcePath);
+  const uniqueImageName = `img_${Date.now()}_${Math.floor(Math.random() * 1000000)}_${originalImageName}`;
+  const destinationPath = path.join(relativePathTo_events_images, event_folder_name, uniqueImageName);
+  
+  copyImageToNewLoc(imgSourcePath, destinationPath);
+  createImageElement(galleryDiv_of_addedImage, event_folder_name, uniqueImageName);
+}
 
-  // creating image and inserting it into gallery div ////
+
+function createImageElement(galleryDiv_of_addedImage, event_folder_name, imageName) {
+  unsavedImagesList.push(path.join(event_folder_name, imageName));
+  
+  // Creating image and inserting it into gallery div ////
   const imgContainer = document.createElement('div');
   imgContainer.className = 'image-container';
 
   const img = document.createElement('img');
-  img.src = path.relative(__dirname, path.join(destinationFolder, path.basename(imgSourcePath)));
+  img.src = path.join('..', relativePathTo_events_images, event_folder_name, imageName);
+  console.log(img.src);
+  console.log(relativePathTo_events_images);
+  console.log(event_folder_name);
+  console.log(imageName)
   img.alt = `Newly Added Image`;
   img.className = 'gallery-image';
 
   const removeButton = document.createElement('button');
-
   removeButton.innerText = 'x';
   removeButton.classList.add("skill-delete-btn");
+  
   removeButton.addEventListener('click', () => {
     galleryDiv_of_addedImage.removeChild(imgContainer);
+    let event_and_image_names = path.join(event_folder_name, fileName);
+      deleteImageFile(event_and_image_names);
   });
 
   imgContainer.appendChild(img);
   imgContainer.appendChild(removeButton);
   galleryDiv_of_addedImage.appendChild(imgContainer);
-  /////////////
-
-};
+}
 
 
 
@@ -237,16 +219,11 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
       const addButton = document.createElement('button');
       addButton.innerText = '+';
       addButton.addEventListener('click', () => {
-          // Handle adding new images, e.g. open a dialog to select a new image and append it to galleryDiv
-          // After the user selects a new image, create new img and imgContainer elements and append them to galleryDiv
-          console.log(11)
-          console.log( galleryDiv.id)
-          console.log(99)
           galleryDiv.id = galleryDiv.id.concat("new");
           let galleryDivID_of_addedImage = galleryDiv.id;
-          let folder_name_of_addedImage = event.folder_name;
-          console.log(event)
-          requestImage(folder_name_of_addedImage, galleryDivID_of_addedImage)
+          let event_folder_name = event.folder_name;
+          
+          requestImage(event_folder_name, galleryDivID_of_addedImage)
 
       });
   

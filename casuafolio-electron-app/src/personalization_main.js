@@ -6,6 +6,8 @@ const { populateForm, isValidForm, readForm } = require('./personalize_scripts/f
 const { history, undoChanges, redoChanges , setInfo} = require('./personalize_scripts/undo_redo_management');
 
 const relativePathToPersonalizationConstants = path.join("casuafolio-react-app", "src", "personalizationConstants.json");
+let unsavedEventFoldersList = []; 
+let unsavedImagesList = []; // a list of path.join(folder_name_of_addedImage, fileName)
 
 fs.readFile(relativePathToPersonalizationConstants, 'utf8', (err, data) => {
   if (err) {
@@ -31,17 +33,38 @@ function handleSubmit() {
         return;
       }
       alert("Successfully Saved :)");
+      unsavedEventFoldersList = []; // all events were saved, so reset the list
     });
   } else {
     alert("Saving Failed :(");
   }
 };
+const relativePathTo_events_images = path.join("casuafolio-react-app", "public", "events_images");
+function rmUnsavedImagesList() {
+  unsavedImagesList.forEach(unsavedImage => {
+    let event_and_image_names = path.join(relativePathTo_events_images, unsavedImage);
+    deleteImageFile(event_and_image_names);
+    });
+};
+function rmUnsavedEventFolders() {
+  //alert(relativePathTo_events_images);
+  unsavedEventFoldersList.forEach(unsavedFolderName => {
+    let folderPath = path.join(relativePathTo_events_images, unsavedFolderName);
+    //alert(unsavedFolderName);
+    removeFolder(unsavedFolderName);
+  });
+  //alert("done");
+}
 
+function deleteUnsavedFiles() {
+  rmUnsavedImagesList();
+  rmUnsavedEventFolders();
+}
 
 
 
 document.getElementById('save-changes-btn').addEventListener('click', handleSubmit);
 document.getElementById('undoButton').addEventListener('click', undoChanges);
 document.getElementById('redoButton').addEventListener('click', redoChanges);
-
+document.getElementById('back-button').addEventListener('click', deleteUnsavedFiles);
 
