@@ -101,13 +101,18 @@ input, textarea {
     margin-top: 2em;
 }
 
-.eventDiv:hover {
-    background-color: #000000; /
+.skillsDiv {
+    background-color: transparent;
 }
 
-.eventDiv:hover .skillsDiv {
-    background-color: inherit; /* Styling for skillsDiv when eventDiv is hovered over */
+.eventDiv {
+    transition: background-color 0.5s ease; /* Adjust as needed */
 }
+
+.eventDiv:hover {
+    background-color: #000000;
+}
+
 
 
 

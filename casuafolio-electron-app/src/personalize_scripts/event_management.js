@@ -66,12 +66,15 @@ function processNewImage(imgSourcePath, event_folder_name, galleryDivID_of_added
   const destinationPath = path.join(relativePathTo_events_images, event_folder_name, uniqueImageName);
   
   copyImageToNewLoc(imgSourcePath, destinationPath);
+
+
+  unsavedImagesList.push(path.join(event_folder_name, uniqueImageName));
+
   createImageElement(galleryDiv_of_addedImage, event_folder_name, uniqueImageName);
 }
 
 
 function createImageElement(galleryDiv_of_addedImage, event_folder_name, imageName) {
-  unsavedImagesList.push(path.join(event_folder_name, imageName));
   
   // Creating image and inserting it into gallery div ////
   const imgContainer = document.createElement('div');
@@ -79,11 +82,7 @@ function createImageElement(galleryDiv_of_addedImage, event_folder_name, imageNa
 
   const img = document.createElement('img');
   img.src = path.join('..', relativePathTo_events_images, event_folder_name, imageName);
-  console.log(img.src);
-  console.log(relativePathTo_events_images);
-  console.log(event_folder_name);
-  console.log(imageName)
-  img.alt = `Newly Added Image`;
+  img.alt = `Gallery Image: ${imageName}`;
   img.className = 'gallery-image';
 
   const removeButton = document.createElement('button');
@@ -92,7 +91,7 @@ function createImageElement(galleryDiv_of_addedImage, event_folder_name, imageNa
   
   removeButton.addEventListener('click', () => {
     galleryDiv_of_addedImage.removeChild(imgContainer);
-    let event_and_image_names = path.join(event_folder_name, fileName);
+    let event_and_image_names = path.join(event_folder_name, imageName);
       deleteImageFile(event_and_image_names);
   });
 
@@ -135,12 +134,14 @@ function addNewEvent(sectionInfo, sectionId) {
 
   const newEvent = {
     title: 'Your Company Name',
-    event_name: 'Your Position',
-    date: 'Your Date Range',
+    event_name: 'Your Position/Role',
+    date: 'Month Year - Month Year',
     description: ['Task or achievement 1', 'Task or achievement 2'],
     skills: ['Skill 1', 'Skill 2'],
-    gallery: [],
-    link: 'Your Link'
+    link: '',
+    gallery: [], // hidden value
+    folder_name: "", // hidden value
+    logo: "" //hidden value
   };
 
   // Combining the title, timestamp, and a random number to form a unique folder name
@@ -195,25 +196,8 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
       galleryDiv.id = `gallery-${index}`;
       galleryDiv.className = 'gallery-container';
   
-      event[key].forEach((path, imgIndex) => {
-          const imgContainer = document.createElement('div');
-          imgContainer.className = 'image-container';
-  
-          const img = document.createElement('img');
-          img.src = path;
-          img.alt = `Image ${imgIndex}`;
-          img.className = 'gallery-image';
-  
-          const removeButton = document.createElement('button');
-          removeButton.classList.add("skill-delete-btn");
-          removeButton.innerText = 'x';
-          removeButton.addEventListener('click', () => {
-              galleryDiv.removeChild(imgContainer);
-          });
-  
-          imgContainer.appendChild(img);
-          imgContainer.appendChild(removeButton);
-          galleryDiv.appendChild(imgContainer);
+      event[key].forEach((imageName) => {
+        createImageElement(galleryDiv, event.folder_name, imageName);
       });
   
       const addButton = document.createElement('button');
@@ -351,6 +335,18 @@ function readEventDiv(eventDiv){
       const value = textarea.value.split('\n');
       event[key] = value;
   });
+
+  // Read image names (for gallery)
+  const galleryDiv = eventDiv.querySelector('.gallery-container');
+  if (galleryDiv) {
+      const imageElements = galleryDiv.querySelectorAll('img.gallery-image');
+      const imageNames = [];
+      imageElements.forEach((img) => {
+          imageNames.push(path.basename(img.src)); // Storing src attribute, modify if you need to store something else
+      });
+      event['gallery'] = imageNames;
+  }
+  //console.log(event);
 
   return event;
 }

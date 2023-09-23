@@ -22,7 +22,9 @@ fs.readFile(relativePathToPersonalizationConstants, 'utf8', (err, data) => {
 
 function handleSubmit() {
   const info = readForm();
-  if (isValidForm(info).valid) {
+  console.log(isValidForm(info));
+  let formValidationResult = isValidForm(info);
+  if (formValidationResult.valid) {
     setInfo(info); // Set the new state
     history.save(); // Save the new state
     
@@ -34,9 +36,10 @@ function handleSubmit() {
       }
       alert("Successfully Saved :)");
       unsavedEventFoldersList = []; // all events were saved, so reset the list
+      unsavedImagesList = [];
     });
   } else {
-    alert("Saving Failed :(");
+    alert("Saving Failed :(  \n\n".concat(formValidationResult.message));
   }
 };
 const relativePathTo_events_images = path.join("casuafolio-react-app", "public", "events_images");

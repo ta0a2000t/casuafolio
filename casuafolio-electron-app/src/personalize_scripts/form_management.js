@@ -13,7 +13,6 @@ function populateForm(info_in) {
   document.getElementById('metaDescription').value = info_in.META_DESCRIPTION;
   document.getElementById('greeting').value = info_in.ABOUT_SECTION_GREETING;
   document.getElementById('aboutText').value = info_in.ABOUT_SECTION_TEXT.join('\n');
-  document.getElementById('aboutSectionGallerySize').value = info_in.ABOUT_SECTION_GALLERY_SIZE;
   
   // Social Links
   document.getElementById('youtubeLink').value = info_in.YOUTUBE_LINK;
@@ -53,7 +52,6 @@ function readForm() {
   info.META_DESCRIPTION = document.getElementById('metaDescription').value;
   info.ABOUT_SECTION_GREETING = document.getElementById('greeting').value;
   info.ABOUT_SECTION_TEXT = document.getElementById('aboutText').value.split('\n');
-  info.ABOUT_SECTION_GALLERY_SIZE = parseInt(document.getElementById('aboutSectionGallerySize').value, 10);
 
   // Social Links
   info.YOUTUBE_LINK = document.getElementById('youtubeLink').value;
@@ -116,13 +114,7 @@ function validateEvent(event) {
     return { valid: false, message: `All skills in the event titled "${event.title}" should be non-empty.` };
   }
   
-  if (!isNonEmpty(event.directory)) 
-    return { valid: false, message: `Directory for "${event.title}" is empty.` };
 
-  if (typeof event.gallery_size !== 'number' || event.gallery_size < 0) {
-    return { valid: false, message: `Gallery size for "${event.title}" should be a non-negative number.` };
-  }
-  
   if (event.link && !isValidURL(event.link)) 
     return { valid: false, message: `Invalid link URL for "${event.title}".` };
 
@@ -134,6 +126,7 @@ function validateEvent(event) {
 
 // Function to validate the main info object
 function isValidForm(info) {
+  console.log(info);
   // Validate top-level string fields
   const topLevelStringFields = [
     "FULL_NAME", "SITE_TITLE", "META_DESCRIPTION",
