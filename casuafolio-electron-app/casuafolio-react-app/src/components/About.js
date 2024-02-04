@@ -20,7 +20,7 @@ const About = () => {
                 </div>
             </div>
             <div className="image-gallery-padding"></div>
-            <ImageGallery directory="./about_images/" gallery_size={ABOUT_SECTION_GALLERY_SIZE} />
+            <ImageGallery folder_name="./about_images/" gallery={[]} />
         </section>
     );
 }

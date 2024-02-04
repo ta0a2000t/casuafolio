@@ -23,6 +23,7 @@ fs.readFile(relativePathToPersonalizationConstants, 'utf8', (err, data) => {
 function handleSubmit() {
   const info = readForm();
   console.log(isValidForm(info));
+  console.log(123);
   let formValidationResult = isValidForm(info);
   if (formValidationResult.valid) {
     setInfo(info); // Set the new state

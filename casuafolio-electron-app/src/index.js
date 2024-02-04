@@ -118,6 +118,7 @@ ipcMain.on('file-request', (event, folder_name_of_addedImage, galleryDivID_of_ad
       if (!file.canceled) {
         const filepath = file.filePaths[0].toString();
         console.log(filepath);
+        console.log("file path of image 1, at index.js")
         event.reply('file', filepath);
       }  
     }).catch(err => {
@@ -141,6 +142,7 @@ ipcMain.on('file-request', (event, folder_name_of_addedImage, galleryDivID_of_ad
       if (!file.canceled) {
       const filepath = file.filePaths[0].toString();
       console.log(filepath);
+      console.log("file path of image 2, at index.js")
       event.reply('file', filepath, folder_name_of_addedImage, galleryDivID_of_addedImage);
     }  
   }).catch(err => {

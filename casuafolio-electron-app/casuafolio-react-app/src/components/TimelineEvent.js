@@ -58,7 +58,7 @@ const TimelineEvent = ({ event }) => {
         <span className="event-date">{event.date}</span>
         <div className="timeline-top"> 
           <div className="timeline-image">
-              <img src={`${event.directory}/logo.png`} alt={event.title} loading="lazy" />
+              <img src={`${event.folder_name}/logo.png`} alt={event.title} loading="lazy" />
           </div>
           <div className="timeline-content">
             <h3>{event.title}</h3>
@@ -74,7 +74,7 @@ const TimelineEvent = ({ event }) => {
 
         <EventDescription description={event.description} style={{ marginTop: '0em' }}/>
         <SkillList skills={event.skills} />
-        <ImageGallery directory={event.directory} gallery_size={event.gallery_size} />
+        <ImageGallery folder_name={event.folder_name} gallery={event.gallery} />
       </div>
     </div>
   );
