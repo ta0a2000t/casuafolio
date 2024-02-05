@@ -181,7 +181,7 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
     keyDiv.classList.add('keyDiv');
 
     const keyLabel = document.createElement('label');
-    keyLabel.textContent = key;
+    keyLabel.textContent = formatName(key);
     keyLabel.htmlFor = `${key}-${index}`;
     keyDiv.appendChild(keyLabel);
 
@@ -285,6 +285,8 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
         const inputField = document.createElement('input');
         if (key === "folder_name") {
           inputField.type = 'hidden';
+          keyLabel.textContent = '';
+
         } else {
           inputField.type = 'text';
         }
@@ -385,10 +387,110 @@ function readEventsSection(sectionId) {
   return events;
 }
 
+
+// Main function to create the event section ( multiple events inside)
+const createAboutSection = (sectionInfo, sectionId) => {
+  const sectionDiv = document.getElementById(sectionId);
+  sectionDiv.innerHTML = '';
+
+
+  index = 0
+  const event = sectionInfo[index];
+  event.folder_name = "about_images";
+  const eventDiv = createAboutDiv(event, index);
+  sectionDiv.appendChild(eventDiv);
+  
+};
+
+// Function to create an individual event
+// **mainly for the about section gallery** (a downscaled version of createEventDiv() )
+function createAboutDiv(event, index) {
+  const eventDiv = document.createElement('div');
+  eventDiv.classList.add('eventDiv');
+  
+
+  // Create title for each event
+  const eventTitle = document.createElement('h3');
+  eventTitle.textContent = `About Section`; 
+  eventDiv.appendChild(eventTitle);
+
+  // Loop through keys in each event
+  Object.keys(event).forEach((key) => {
+    const keyDiv = document.createElement('div');
+    keyDiv.classList.add('keyDiv');
+
+    const keyLabel = document.createElement('label');
+    keyLabel.textContent = formatName(key);
+    keyLabel.htmlFor = `${key}-${index}`;
+    keyDiv.appendChild(keyLabel);
+
+    // Handle different types of key-value pairs
+    if (key === "gallery") {
+      const galleryDiv = document.createElement('div');
+      galleryDiv.id = `gallery-${index}`;
+      galleryDiv.className = 'gallery-container';
+  
+      event[key].forEach((imageName) => {
+        createImageElement(galleryDiv, event.folder_name, imageName);
+      });
+  
+      const addButton = document.createElement('button');
+      addButton.innerText = '+';
+      addButton.addEventListener('click', () => {
+          galleryDiv.id = galleryDiv.id.concat("new");
+          let galleryDivID_of_addedImage = galleryDiv.id;
+          let event_folder_name = event.folder_name;
+          
+          requestImage(event_folder_name, galleryDivID_of_addedImage)
+
+      });
+  
+      keyDiv.appendChild(galleryDiv);
+      keyDiv.appendChild(addButton); // Append outside of the galleryDiv
+    } else {
+        const inputField = document.createElement('input');
+        if (key === "folder_name") {
+          inputField.type = 'hidden';
+          keyLabel.textContent = '';
+        } else {
+          inputField.type = 'text';
+        }
+
+        inputField.id = `${key}-${index}`;
+        inputField.value = event[key];
+        keyDiv.appendChild(inputField);
+
+        
+    }
+
+    eventDiv.appendChild(keyDiv);
+  });
+      
+  return eventDiv;
+}
+
+
+
 module.exports = {
   createEventDiv,
   addNewEvent,
   createEventsSection,
-  readEventsSection
+  readEventsSection,
+  createAboutSection
 };
   
+
+
+
+
+function formatName(unformattedName) {
+  // Split the string by underscores
+  const words = unformattedName.split('_');
+  
+  // Capitalize the first letter of each word and join them back together
+  const formattedName = words.map(word => 
+    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+  ).join(' '); // Join with a space for display-friendly format
+  
+  return formattedName;
+}

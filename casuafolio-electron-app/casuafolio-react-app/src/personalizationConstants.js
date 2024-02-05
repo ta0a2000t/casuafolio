@@ -21,7 +21,7 @@ export const META_DESCRIPTION = info.META_DESCRIPTION;
 // ---- Sub-Section: About Section (aka bio) ----
 export const ABOUT_SECTION_GREETING =info.ABOUT_SECTION_GREETING;
 export const ABOUT_SECTION_TEXT = info.ABOUT_SECTION_TEXT;
-export const ABOUT_SECTION_GALLERY_SIZE = info.ABOUT_SECTION_GALLERY_SIZE; // DO NOT COUNT "image0.jpg"
+export const ABOUT_SECTION_GALLERY = info.ABOUT_SECTION_GALLERY; // DO NOT COUNT "image0.jpg"
 
 
 

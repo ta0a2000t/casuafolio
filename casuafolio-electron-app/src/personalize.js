@@ -1,3 +1,4 @@
+// THIS IS NOT USED, I FORGOT WHY, BUT THIS IS NOT USED
 const fs = require('fs');
 const path = require('path');
 const SimpleUndo = require('simple-undo'); // import the SimpleUndo package
@@ -42,7 +43,7 @@ fs.readFile(relativePathToPersonalizationConstants, 'utf8', (err, data) => {
 
   info = JSON.parse(data);
   history.save();
-
+  console.log(123445);
   populateForm(info);
 
 });
@@ -62,7 +63,6 @@ function populateForm(info_in) {
     document.getElementById('metaDescription').value = info_in.META_DESCRIPTION;
     document.getElementById('greeting').value = info_in.ABOUT_SECTION_GREETING;
     document.getElementById('aboutText').value = info_in.ABOUT_SECTION_TEXT.join('\n');
-    document.getElementById('aboutSectionGallerySize').value = info_in.ABOUT_SECTION_GALLERY_SIZE;
     
     // Social Links
     document.getElementById('youtubeLink').value = info_in.YOUTUBE_LINK;
@@ -87,6 +87,7 @@ function populateForm(info_in) {
   createSection(info_in.EXPERIENCE_EVENTS, 'experienceEvents');
   createSection(info_in.VOLUNTEER_EVENTS, 'volunteerEvents');
   createSection(info_in.PROJECT_EVENTS, 'projectEvents');
+  createAboutSection([{gallery: []}], 'aboutSectionInputs');
 
 }
 
@@ -100,7 +101,6 @@ document.getElementById('personalizationForm').addEventListener('submit', functi
     info.META_DESCRIPTION = document.getElementById('metaDescription').value;
     info.ABOUT_SECTION_GREETING = document.getElementById('greeting').value;
     info.ABOUT_SECTION_TEXT = document.getElementById('aboutText').value.split('\n');
-    info.ABOUT_SECTION_GALLERY_SIZE = parseInt(document.getElementById('aboutSectionGallerySize').value, 10);
 
     // Social Links
     info.YOUTUBE_LINK = document.getElementById('youtubeLink').value;
@@ -124,9 +124,8 @@ document.getElementById('personalizationForm').addEventListener('submit', functi
     info.EXPERIENCE_EVENTS = readSection('experienceEvents');
     info.VOLUNTEER_EVENTS = readSection('volunteerEvents');
     info.PROJECT_EVENTS = readSection('projectEvents');
-
-
-
+    const ABOUT_SECTION_INPUTS = readSection('aboutSectionInputs');
+    info.ABOUT_SECTION_GALLERY = []; //ABOUT_SECTION_INPUTS[0].gallery
     history.save();
 
     // Update the file

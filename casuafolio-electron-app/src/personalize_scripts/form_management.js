@@ -1,4 +1,4 @@
-const { createEventsSection, readEventsSection} = require('./event_management');
+const { createEventsSection, readEventsSection, createAboutSection} = require('./event_management');
 
 // Function to populate the form fields with existing values
 function populateForm(info_in) {
@@ -37,6 +37,7 @@ function populateForm(info_in) {
   createEventsSection(info_in.EXPERIENCE_EVENTS, 'experienceEvents');
   createEventsSection(info_in.VOLUNTEER_EVENTS, 'volunteerEvents');
   createEventsSection(info_in.PROJECT_EVENTS, 'projectEvents');
+  createAboutSection([{gallery: info_in.ABOUT_SECTION_GALLERY}], 'aboutSectionInputs');
 
 }
 
@@ -75,7 +76,7 @@ function readForm() {
   info.EXPERIENCE_EVENTS = readEventsSection('experienceEvents');
   info.VOLUNTEER_EVENTS = readEventsSection('volunteerEvents');
   info.PROJECT_EVENTS = readEventsSection('projectEvents');
-
+  info.ABOUT_SECTION_GALLERY = readEventsSection('aboutSectionInputs')[0].gallery;
   return info;
 }
 
