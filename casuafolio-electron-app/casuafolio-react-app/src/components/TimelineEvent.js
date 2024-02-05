@@ -58,7 +58,7 @@ const TimelineEvent = ({ event }) => {
         <span className="event-date">{event.date}</span>
         <div className="timeline-top"> 
           <div className="timeline-image">
-              <img src={`${event.folder_name}/logo.png`} alt={event.title} loading="lazy" />
+              <img src={`./events_images/${event.folder_name}/${event.logo}`} alt={event.title} loading="lazy" />
           </div>
           <div className="timeline-content">
             <h3>{event.title}</h3>

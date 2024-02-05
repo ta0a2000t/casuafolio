@@ -242,7 +242,8 @@ i {
     margin: 5px;
 }
 
-.gallery-image {
+
+.gallery-image, .logo-image {
     width: auto;
     height: 100px;
 }

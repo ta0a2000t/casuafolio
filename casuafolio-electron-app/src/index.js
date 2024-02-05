@@ -97,7 +97,7 @@ app.disableHardwareAcceleration();
 
 
 
-ipcMain.on('file-request', (event, folder_name_of_addedImage, galleryDivID_of_addedImage) => {  
+ipcMain.on('file-request', (event, folder_name_of_addedImage, galleryDivID_of_addedImage, isLogo) => {  
   // If the platform is 'win32' or 'Linux'
   if (process.platform !== 'darwin') {
     // Resolves to a Promise<Object>
@@ -143,7 +143,7 @@ ipcMain.on('file-request', (event, folder_name_of_addedImage, galleryDivID_of_ad
       const filepath = file.filePaths[0].toString();
       console.log(filepath);
       console.log("file path of image 2, at index.js")
-      event.reply('file', filepath, folder_name_of_addedImage, galleryDivID_of_addedImage);
+      event.reply('file', filepath, folder_name_of_addedImage, galleryDivID_of_addedImage, isLogo);
     }  
   }).catch(err => {
       console.log(err)

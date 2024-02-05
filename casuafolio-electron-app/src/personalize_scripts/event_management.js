@@ -57,7 +57,7 @@ function deleteImageFile(event_and_image_names) {
 
 }
 
-function processNewImage(imgSourcePath, event_folder_name, galleryDivID_of_addedImage) {  
+function processNewImage(imgSourcePath, event_folder_name, galleryDivID_of_addedImage, isLogo) {  
   let galleryDiv_of_addedImage = document.getElementById(galleryDivID_of_addedImage);
   galleryDiv_of_addedImage.id = galleryDiv_of_addedImage.id.slice(0, galleryDiv_of_addedImage.id.length - 3); // remove "new"
   
@@ -69,36 +69,66 @@ function processNewImage(imgSourcePath, event_folder_name, galleryDivID_of_added
 
 
   unsavedImagesList.push(path.join(event_folder_name, uniqueImageName));
-
-  createImageElement(galleryDiv_of_addedImage, event_folder_name, uniqueImageName);
+  
+  createImageElement(galleryDiv_of_addedImage, event_folder_name, uniqueImageName, isLogo);
 }
 
 
-function createImageElement(galleryDiv_of_addedImage, event_folder_name, imageName) {
-  
-  // Creating image and inserting it into gallery div ////
-  const imgContainer = document.createElement('div');
-  imgContainer.className = 'image-container';
 
-  const img = document.createElement('img');
-  img.src = path.join('..', relativePathTo_events_images, event_folder_name, imageName);
-  img.alt = `Gallery Image: ${imageName}`;
-  img.className = 'gallery-image';
+function createImageElement(galleryDiv_of_addedImage, event_folder_name, imageName, isLogo) {
+  if (isLogo) {
+      // Step 1: Identify and delete existing logo
+      const existingLogo = galleryDiv_of_addedImage.querySelector('.logo-image');
+      if (existingLogo) {
+          // Assuming deleteImageFile handles the deletion logic, including server-side if applicable
+          const existingImageName = existingLogo.getAttribute('data-image-name');
+          if (existingImageName) {
+              let event_and_image_names = path.join(event_folder_name, existingImageName);
+              deleteImageFile(event_and_image_names); // Delete the existing logo
+          }
+          galleryDiv_of_addedImage.removeChild(existingLogo.parentNode); // Remove the container of the logo
+      }
 
-  const removeButton = document.createElement('button');
-  removeButton.innerText = 'x';
-  removeButton.classList.add("skill-delete-btn");
-  
-  removeButton.addEventListener('click', () => {
-    galleryDiv_of_addedImage.removeChild(imgContainer);
-    let event_and_image_names = path.join(event_folder_name, imageName);
-      deleteImageFile(event_and_image_names);
-  });
+      // Step 2: Add the new logo
+      // Creating a new container for the logo might be optional based on your specific needs
+      const logoContainer = document.createElement('div');
+      logoContainer.className = 'logo-container';
 
-  imgContainer.appendChild(img);
-  imgContainer.appendChild(removeButton);
-  galleryDiv_of_addedImage.appendChild(imgContainer);
+      const logoImg = document.createElement('img');
+      logoImg.src = path.join('..', relativePathTo_events_images, event_folder_name, imageName);
+      logoImg.alt = "Logo Image";
+      logoImg.className = 'logo-image';
+      logoImg.setAttribute('data-image-name', imageName); // Store image name for potential future deletion
+
+      logoContainer.appendChild(logoImg);
+      galleryDiv_of_addedImage.appendChild(logoContainer);
+  } else {
+    console.log(isLogo);
+
+      // Gallery image logic remains as before
+      const imgContainer = document.createElement('div');
+      imgContainer.className = 'image-container';
+
+      const img = document.createElement('img');
+      img.src = path.join('..', relativePathTo_events_images, event_folder_name, imageName);
+      img.alt = `Gallery Image: ${imageName}`;
+      img.className = 'gallery-image';
+
+      const removeButton = document.createElement('button');
+      removeButton.innerText = 'x';
+      removeButton.classList.add("skill-delete-btn");
+      removeButton.addEventListener('click', () => {
+          galleryDiv_of_addedImage.removeChild(imgContainer);
+          let event_and_image_names = path.join(event_folder_name, imageName);
+          deleteImageFile(event_and_image_names);
+      });
+
+      imgContainer.appendChild(img);
+      imgContainer.appendChild(removeButton);
+      galleryDiv_of_addedImage.appendChild(imgContainer);
+  }
 }
+
 
 
 
@@ -206,13 +236,36 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
           galleryDiv.id = galleryDiv.id.concat("new");
           let galleryDivID_of_addedImage = galleryDiv.id;
           let event_folder_name = event.folder_name;
-          
-          requestImage(event_folder_name, galleryDivID_of_addedImage)
+          const isLogo = false;
+          requestImage(event_folder_name, galleryDivID_of_addedImage, isLogo)
 
       });
   
       keyDiv.appendChild(galleryDiv);
       keyDiv.appendChild(addButton); // Append outside of the galleryDiv
+  } else if (key == 'logo') {
+    // Create a container for the logo
+    const logoContainer = document.createElement('div');
+    logoContainer.id = `logo-container-${index}`;
+    logoContainer.className = 'logo-container';
+  
+    // If a logo already exists, display it
+    if (event[key]) {
+      createImageElement(logoContainer, event.folder_name, event[key], true); // Assuming the last parameter signifies 'isLogo'
+    }
+  
+    // Create a replace button for the logo
+    const replaceButton = document.createElement('button');
+    replaceButton.textContent = 'Replace Logo';
+    replaceButton.addEventListener('click', () => {
+      let logoContainerID = logoContainer.id; // Use the container's current ID without alteration
+      const isLogo = true; // Signify that this is for a logo, affecting how 'createImageElement' and 'requestImage' behave
+      requestImage(event.folder_name, logoContainerID, isLogo); // No need to alter the ID like with the gallery
+    });
+  
+    // Append the logo (if exists) and replace button to the logo container
+    logoContainer.appendChild(replaceButton);
+    keyDiv.appendChild(logoContainer); // Append the logo container to the keyDiv
   } else if (key === 'skills') {
       const skillsDiv = document.createElement('div');
       skillsDiv.classList.add('skillsDiv');
@@ -348,7 +401,14 @@ function readEventDiv(eventDiv){
       });
       event['gallery'] = imageNames;
   }
-  //console.log(event);
+
+  // Read logo image name, if present
+  const logoImg = eventDiv.querySelector('img.logo-image');
+  if (logoImg) {
+      // Assuming the logo file name can be extracted from the src attribute
+      const logoPath = new URL(logoImg.src).pathname;
+      event['logo'] = path.basename(logoPath); // Assigning directly since only one logo is expected
+  }
 
   return event;
 }
@@ -468,6 +528,8 @@ function createAboutDiv(event, index) {
       
   return eventDiv;
 }
+
+
 
 
 
