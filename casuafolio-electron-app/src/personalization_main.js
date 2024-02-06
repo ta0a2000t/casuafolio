@@ -5,7 +5,20 @@ const path = require('path');
 const { populateForm, isValidForm, readForm } = require('./personalize_scripts/form_management');
 const { history, undoChanges, redoChanges , setInfo} = require('./personalize_scripts/undo_redo_management');
 
-const relativePathToPersonalizationConstants = path.join("casuafolio-react-app", "src", "personalizationConstants.json");
+
+
+
+// Set the base path depending on the environment
+let basePath =  path.join(__dirname, '..') // Adjust if // Corrected path for production
+
+if (path.basename(basePath) == 'app.asar') {
+  basePath = path.join(basePath, '..', 'casuafolio-react-app');
+} else {
+  basePath = path.join(basePath, 'casuafolio-react-app')
+}
+console.log(basePath)
+
+const relativePathToPersonalizationConstants = path.join(basePath, 'src', "personalizationConstants.json");
 let unsavedEventFoldersList = []; 
 let unsavedImagesList = []; // a list of path.join(folder_name_of_addedImage, fileName)
 
@@ -43,7 +56,8 @@ function handleSubmit() {
     alert("Saving Failed :(  \n\n".concat(formValidationResult.message));
   }
 };
-const relativePathTo_events_images = path.join("casuafolio-react-app", "public", "events_images");
+const relativePathTo_events_images = path.join(basePath,'public','events_images');
+console.log(relativePathTo_events_images)
 function rmUnsavedImagesList() {
   unsavedImagesList.forEach(unsavedImage => {
     let event_and_image_names = path.join(relativePathTo_events_images, unsavedImage);

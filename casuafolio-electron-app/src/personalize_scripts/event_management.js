@@ -64,7 +64,8 @@ function processNewImage(imgSourcePath, event_folder_name, galleryDivID_of_added
   const originalImageName = path.basename(imgSourcePath);
   const uniqueImageName = `img_${Date.now()}_${Math.floor(Math.random() * 1000000)}_${originalImageName}`;
   const destinationPath = path.join(relativePathTo_events_images, event_folder_name, uniqueImageName);
-  
+  console.log(destinationPath)
+  console.log(999)
   copyImageToNewLoc(imgSourcePath, destinationPath);
 
 
@@ -95,7 +96,7 @@ function createImageElement(galleryDiv_of_addedImage, event_folder_name, imageNa
       logoContainer.className = 'logo-container';
 
       const logoImg = document.createElement('img');
-      logoImg.src = path.join('..', relativePathTo_events_images, event_folder_name, imageName);
+      logoImg.src = path.join(relativePathTo_events_images, event_folder_name, imageName);
       logoImg.alt = "Logo Image";
       logoImg.className = 'logo-image';
       logoImg.setAttribute('data-image-name', imageName); // Store image name for potential future deletion
@@ -110,7 +111,7 @@ function createImageElement(galleryDiv_of_addedImage, event_folder_name, imageNa
       imgContainer.className = 'image-container';
 
       const img = document.createElement('img');
-      img.src = path.join('..', relativePathTo_events_images, event_folder_name, imageName);
+      img.src = path.join(relativePathTo_events_images, event_folder_name, imageName);
       img.alt = `Gallery Image: ${imageName}`;
       img.className = 'gallery-image';
 
