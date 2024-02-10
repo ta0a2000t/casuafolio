@@ -78,16 +78,12 @@ function processNewImage(imgSourcePath, event_folder_name, galleryDivID_of_added
   const originalImageName = path.basename(imgSourcePath);
   const uniqueImageName = `img_${Date.now()}_${Math.floor(Math.random() * 1000000)}_${originalImageName}`;
   const destinationPath = path.join(relativePathTo_events_images, event_folder_name, uniqueImageName);
-  console.log(destinationPath)
-  console.log(999)
   copyImageToNewLoc(imgSourcePath, destinationPath);
 
   console.log(event_folder_name)
   console. trace()
   unsavedImagesList.push(path.join(event_folder_name, uniqueImageName));
-  console.log(unsavedImagesList)
-  console.log(uniqueImageName)
-  console.log(uniqueImageName)
+
   createImageElement(galleryDiv_of_addedImage, event_folder_name, uniqueImageName, isLogo);
 }
 
@@ -169,7 +165,7 @@ function createImageElement(galleryDiv_of_addedImage, event_folder_name, imageNa
 // Function to add a delete button to an event
 function addEventDeleteButton(eventDiv, index, sectionInfo, sectionId) {
   const deleteButton = document.createElement('button');
-  deleteButton.textContent = 'Delete';
+  deleteButton.textContent = 'Delete Event';
   deleteButton.classList.add("event-delete-btn")
   deleteButton.addEventListener('click', () => {
     eventDiv.classList.add('fade-out');
@@ -266,7 +262,7 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
         keyDiv.appendChild(textArea);
     } else if (key === "gallery") {
       const galleryDiv = document.createElement('div');
-      galleryDiv.id = `gallery-${index}`;
+      galleryDiv.id = getGalleryDivIdOfEvent(event.folder_name);
       galleryDiv.className = 'gallery-container';
   
       event[key].forEach((imageName) => {
@@ -286,10 +282,10 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
   
       keyDiv.appendChild(galleryDiv);
       keyDiv.appendChild(addButton); // Append outside of the galleryDiv
-  } else if (key == 'logo') {
+  } else if (key === 'logo') {
     // Create a container for the logo
     const logoContainer = document.createElement('div');
-    logoContainer.id = `logo-container-${index}`;
+    logoContainer.id = getLogoContainerIdOfEvent(event.folder_name);
     logoContainer.className = 'logo-container';
   
     // If a logo already exists, display it
@@ -475,7 +471,12 @@ const createEventsSection = (sectionInfo, sectionId) => {
   for (let index =  0 ; index < sectionInfo.length; index++) {
       const event = sectionInfo[index];
       const eventDiv = createEventDiv(event, index, sectionInfo, sectionId);
+
       sectionDiv.appendChild(eventDiv);
+
+      if (event.logo === "") {// if event has no log (ie. newly created evnt)
+        processNewImage(path.join(relativePathTo_events_images, '..', 'blankImage.png'), event.folder_name, getLogoContainerIdOfEvent(event.folder_name), true);
+      }
   }
 };
   
@@ -530,7 +531,7 @@ function createAboutDiv(event, index) {
     // Handle different types of key-value pairs
     if (key === "gallery") {
       const galleryDiv = document.createElement('div');
-      galleryDiv.id = `gallery-${index}`;
+      galleryDiv.id = getGalleryDivIdOfEvent(event.folder_name);
       galleryDiv.className = 'gallery-container';
   
       event[key].forEach((imageName) => {
@@ -598,4 +599,13 @@ function formatName(unformattedName) {
   ).join(' '); // Join with a space for display-friendly format
   
   return formattedName;
+}
+
+
+function getGalleryDivIdOfEvent(event_folder_name) {
+  return `gallery-${event_folder_name}`;
+}
+
+function getLogoContainerIdOfEvent(event_folder_name) {
+  return `logo-container-${event_folder_name}`;
 }
