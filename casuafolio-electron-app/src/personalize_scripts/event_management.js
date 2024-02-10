@@ -44,17 +44,26 @@ async function copyImageToNewLoc(imgSourcePath, destinationPath) {
 }
 
 
-
 function deleteImageFile(event_and_image_names) {
-  // let event_and_image_names = path.join(event_folder_name, fileName);
+  const imagePath = path.join(relativePathTo_events_images, event_and_image_names);
 
-  const folderPath = path.join(relativePathTo_events_images, event_and_image_names);
-  fs.rm(folderPath, { recursive: true }, (err) => {
-    if (err) throw err;
-    console.log(`Image ${folderPath} removed`);
-    unsavedImagesList = unsavedImagesList.filter(e => e !== event_and_image_names);
+  // Check if the file exists before attempting to delete it
+  fs.access(imagePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      console.error(`File ${imagePath} does not exist.`);
+      return;
+    }
+
+    // File exists, proceed with deletion
+    fs.rm(imagePath, { recursive: true }, (err) => {
+      if (err) {
+        console.error(`Failed to remove ${imagePath}:`, err);
+        return;
+      }
+      console.log(`Image ${imagePath} removed`);
+      unsavedImagesList = unsavedImagesList.filter(e => e !== event_and_image_names);
+    });
   });
-
 }
 
 function processNewImage(imgSourcePath, event_folder_name, galleryDivID_of_addedImage, isLogo) {  
@@ -68,9 +77,12 @@ function processNewImage(imgSourcePath, event_folder_name, galleryDivID_of_added
   console.log(999)
   copyImageToNewLoc(imgSourcePath, destinationPath);
 
-
+  console.log(event_folder_name)
+  console. trace()
   unsavedImagesList.push(path.join(event_folder_name, uniqueImageName));
-  
+  console.log(unsavedImagesList)
+  console.log(uniqueImageName)
+  console.log(uniqueImageName)
   createImageElement(galleryDiv_of_addedImage, event_folder_name, uniqueImageName, isLogo);
 }
 
@@ -85,7 +97,14 @@ function createImageElement(galleryDiv_of_addedImage, event_folder_name, imageNa
           const existingImageName = existingLogo.getAttribute('data-image-name');
           if (existingImageName) {
               let event_and_image_names = path.join(event_folder_name, existingImageName);
-              deleteImageFile(event_and_image_names); // Delete the existing logo
+              //deleteImageFile(event_and_image_names); // Delete the existing logo
+              toBeDeletedImageList.push({
+                path: event_and_image_names,
+                galleryDivId: galleryDiv_of_addedImage.id,
+                eventName: event_folder_name,
+                imageName: imageName,
+                isLogo: isLogo
+              });// do not delete until the submit button gets hit
           }
           galleryDiv_of_addedImage.removeChild(existingLogo.parentNode); // Remove the container of the logo
       }
@@ -104,7 +123,6 @@ function createImageElement(galleryDiv_of_addedImage, event_folder_name, imageNa
       logoContainer.appendChild(logoImg);
       galleryDiv_of_addedImage.appendChild(logoContainer);
   } else {
-    console.log(isLogo);
 
       // Gallery image logic remains as before
       const imgContainer = document.createElement('div');
@@ -121,7 +139,15 @@ function createImageElement(galleryDiv_of_addedImage, event_folder_name, imageNa
       removeButton.addEventListener('click', () => {
           galleryDiv_of_addedImage.removeChild(imgContainer);
           let event_and_image_names = path.join(event_folder_name, imageName);
-          deleteImageFile(event_and_image_names);
+          //deleteImageFile(event_and_image_names);
+          toBeDeletedImageList.push({
+            path: event_and_image_names,
+            galleryDivId: galleryDiv_of_addedImage.id,
+            eventName: event_folder_name,
+            imageName: imageName,
+            isLogo: isLogo
+          });
+           // do not delete until the submit button gets hit
       });
 
       imgContainer.appendChild(img);

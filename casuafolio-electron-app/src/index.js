@@ -6,6 +6,7 @@ const path = require('path');
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
 }
+let isCleanupDone = false;
 
 const createWindow = () => {
   // Create the browser window.
@@ -34,7 +35,15 @@ const createWindow = () => {
   mainWindow.webContents.openDevTools();
 
 
+  mainWindow.on('close', (e) => {
+     // Prevent window from closing immediately
+    e.preventDefault();
+    console.log('Quitting casuafolio...')
+    // close
+    mainWindow.destroy()
+    app.quit()
 
+  })
 };
 
 
