@@ -16,7 +16,6 @@ if (path.basename(basePath) == 'app.asar') {
 } else {
   basePath = path.join(basePath, 'casuafolio-react-app')
 }
-console.log(basePath)
 
 const relativePathToPersonalizationConstants = path.join(basePath, 'src', "personalizationConstants.json");
 let unsavedEventFoldersList = []; 
