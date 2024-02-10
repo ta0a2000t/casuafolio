@@ -5,13 +5,18 @@ function prepend(value, array) {
   return newArray;
 }
 
-function createFolder(folderName) {
+function createFolder(folderName, callback) {
   unsavedEventFoldersList.push(folderName);
   const folderPath = path.join(relativePathTo_events_images, folderName);
   fs.mkdir(folderPath, { recursive: true }, (err) => {
-    if (err) throw err;
+    if (err) {
+      console.error(`Failed to create folder ${folderPath}`, err);
+      if (callback) callback(err);
+      return;
+    }
     
     console.log(`Folder ${folderPath} created`);
+    if (callback) callback(null); // Indicate success by calling callback without an error
   });
 }
 
@@ -206,18 +211,26 @@ function addNewEvent(sectionInfo, sectionId) {
 
   // Combining the title, timestamp, and a random number to form a unique folder name
   const folderName = `event_images_${Date.now()}_${Math.floor(Math.random() * 1000000)}`;
-  createFolder(folderName);
 
-  // Storing the folderName in the event object
-  newEvent.folder_name = folderName;
+  // createFolder with a callback to ensure actions are taken after the folder is created
+  createFolder(folderName, (err) => {
+    if (err) {
+      console.error('Failed to create folder for new event:', err);
+      return; // Stop further execution
+    }
 
+    // Folder creation was successful
 
+    // Storing the folderName in the event object
+    newEvent.folder_name = folderName;
 
-  // Prepend new event to the sectionInfo array
-  sectionInfo = prepend(newEvent, sectionInfo);
+    // Prepend new event to the sectionInfo array
+    sectionInfo = prepend(newEvent, sectionInfo);
 
-  // Recreate the events section with the updated sectionInfo
-  createEventsSection(sectionInfo, sectionId);
+    // Recreate the events section with the updated sectionInfo
+    createEventsSection(sectionInfo, sectionId);
+
+  });
 }
 
 
