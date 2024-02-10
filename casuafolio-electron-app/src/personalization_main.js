@@ -23,8 +23,8 @@ let unsavedEventFoldersList = [];
 let unsavedImagesList = []; // a list of path.join(folder_name_of_addedImage, fileName)
 
 
-let toBeDeletedFolderList = [];
-let toBeDeletedImageList = [];
+let toBeDeletedFolderList = []; // a list of "toBeDeletedFolderList.push({ folderName: sectionInfo[index].folder_name, sectionInfo: sectionInfo, sectionId: sectionId, eventIndex: index, // Store index to potentially reorder or restore UI elements eventData: sectionInfo[index] // Optionally store the entire event data if needed for restoration });"
+let toBeDeletedImageList = []; // a list of "toBeDeletedImageList.push({ path: event_and_image_names, galleryDivId: galleryDiv_of_addedImage.id, eventName: event_folder_name, imageName: imageName, isLogo: isLogo });"
 
 fs.readFile(relativePathToPersonalizationConstants, 'utf8', (err, data) => {
   if (err) {
@@ -44,8 +44,14 @@ function deleteMarkedFilesAndFolders() {
   });
 
   // Delete marked folders
-  toBeDeletedFolderList.forEach(folderPath => {
-    removeFolder(folderPath);
+  toBeDeletedFolderList.forEach(deletedEventObj => {
+    setTimeout(() => {
+      removeFolder(deletedEventObj.folderName);// so here do the timout thing
+    
+      deletedEventObj.sectionInfo.splice(deletedEventObj.eventIndex, 1);
+      createEventsSection(deletedEventObj.sectionInfo, deletedEventObj.sectionId);
+    }, 500); // TODO: replace this timeout with promises and callbacks
+
   });
 
   // Reset lists
@@ -117,17 +123,22 @@ function revertImageDeletions() {
   toBeDeletedImageList = [];
 }
 
+function revertFolderDeletions() {
+  // nothing is needed to be done here because sectionInfo is not modified until save is pressed
+
+  toBeDeletedFolderList = []; // Reset the list after reverting
+}
+
+
 function onNavigatingBack() {
   console.log("Navigating back... Reverting unsaved file/folder deletions");
 
   // return the divs & reset list
   revertImageDeletions()
 
-  
+  revertFolderDeletions()
 
 
-  //  reset lists without deleting anything
-  toBeDeletedFolderList = [];
 
   // cleanup
   deleteUnsavedFiles();

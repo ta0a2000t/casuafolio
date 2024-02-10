@@ -158,7 +158,7 @@ function createImageElement(galleryDiv_of_addedImage, event_folder_name, imageNa
 
 
 
-
+// this is unique for this event since we prepend into secinfo: "sectionInfo.length - index"
 
 
 // Function to add a delete button to an event
@@ -169,14 +169,17 @@ function addEventDeleteButton(eventDiv, index, sectionInfo, sectionId) {
   deleteButton.addEventListener('click', () => {
     eventDiv.classList.add('fade-out');
 
-    
+    // Mark the folder for deletion
+    toBeDeletedFolderList.push({
+      folderName: sectionInfo[index].folder_name,
+      sectionInfo: sectionInfo,
+      sectionId: sectionId,
+      eventIndex: index, // Store index to potentially reorder or restore UI elements
+      eventData: sectionInfo[index] // Optionally store the entire event data if needed for restoration
+    });
 
-    setTimeout(() => {
-      removeFolder(sectionInfo[index].folder_name);
-
-      sectionInfo.splice(index, 1);
-      createEventsSection(sectionInfo, sectionId);
-    }, 500);
+    // remove the div of the event, without removing the data in sectionInfo
+    eventDiv.remove()
 
   });
   

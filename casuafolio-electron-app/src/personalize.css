@@ -162,6 +162,7 @@ input, textarea {
 
 
     background-color: #1d1d1dbe;
+    z-index: 1000;
     
 }
 
@@ -176,7 +177,7 @@ footer {
     padding-bottom: 2em;
     padding-top: 1em;
     padding-right: 1em;
-    
+    z-index: 1000;
 }
 
 
