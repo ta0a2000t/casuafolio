@@ -22,7 +22,12 @@ function populateForm(info_in) {
   document.getElementById('instagramLink').value = info_in.INSTAGRAM_LINK;
 
   // Resume and Tab Names
-  document.getElementById('resumeLocation').value = info_in.RESUME_LOCATION;
+  if (info_in.RESUME_LOCATION == '') {
+    deleteCV();
+  } else {
+    setCV();
+  }
+
   document.getElementById('aboutTabName').value = info_in.ABOUT_TAB_NAME;
   document.getElementById('volunteerTabName').value = info_in.VOLUNTEER_TAB_NAME;
   document.getElementById('experienceTabName').value = info_in.EXPERIENCE_TAB_NAME;
@@ -62,7 +67,11 @@ function readForm() {
   info.INSTAGRAM_LINK = document.getElementById('instagramLink').value;
 
   // Resume and Tab Names
-  info.RESUME_LOCATION = document.getElementById('resumeLocation').value;
+  if (document.getElementById('resumePreviewer-div').innerHTML == ``) {
+    info.RESUME_LOCATION = ``;
+  } else {
+    info.RESUME_LOCATION = 'personal_CV_file.pdf';
+  }
   info.ABOUT_TAB_NAME = document.getElementById('aboutTabName').value;
   info.VOLUNTEER_TAB_NAME = document.getElementById('volunteerTabName').value;
   info.EXPERIENCE_TAB_NAME = document.getElementById('experienceTabName').value;
@@ -132,7 +141,7 @@ function isValidForm(info) {
   const topLevelStringFields = [
     "FULL_NAME", "SITE_TITLE", "META_DESCRIPTION",
     "ABOUT_SECTION_GREETING", "YOUTUBE_LINK", "LINKEDIN_LINK",
-    "GITHUB_LINK", "TWITTER_LINK", "INSTAGRAM_LINK", "RESUME_LOCATION",
+    "GITHUB_LINK", "TWITTER_LINK", "INSTAGRAM_LINK",
     "ABOUT_TAB_NAME", "VOLUNTEER_TAB_NAME", "EXPERIENCE_TAB_NAME",
     "PROJECTS_TAB_NAME", "EXPERIENCE_PAGE_HEADLINE", "PROJECTS_PAGE_HEADLINE",
     "VOLUNTEER_PAGE_HEADLINE"

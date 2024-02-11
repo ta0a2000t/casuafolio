@@ -106,7 +106,7 @@ app.disableHardwareAcceleration();
 
 
 
-ipcMain.on('file-request', (event, folder_name_of_addedImage, galleryDivID_of_addedImage, isLogo) => {  
+ipcMain.on('image-file-request', (event, folder_name_of_addedImage, galleryDivID_of_addedImage, isLogo) => {  
   // If the platform is 'win32' or 'Linux'
   if (process.platform !== 'darwin') {
     // Resolves to a Promise<Object>
@@ -128,7 +128,7 @@ ipcMain.on('file-request', (event, folder_name_of_addedImage, galleryDivID_of_ad
         const filepath = file.filePaths[0].toString();
         console.log(filepath);
         console.log("file path of image 1, at index.js")
-        event.reply('file', filepath);
+        event.reply('image-file-received', filepath, folder_name_of_addedImage, galleryDivID_of_addedImage, isLogo);
       }  
     }).catch(err => {
       console.log(err)
@@ -152,7 +152,7 @@ ipcMain.on('file-request', (event, folder_name_of_addedImage, galleryDivID_of_ad
       const filepath = file.filePaths[0].toString();
       console.log(filepath);
       console.log("file path of image 2, at index.js")
-      event.reply('file', filepath, folder_name_of_addedImage, galleryDivID_of_addedImage, isLogo);
+      event.reply('image-file-received', filepath, folder_name_of_addedImage, galleryDivID_of_addedImage, isLogo);
     }  
   }).catch(err => {
       console.log(err)
@@ -162,6 +162,30 @@ ipcMain.on('file-request', (event, folder_name_of_addedImage, galleryDivID_of_ad
 
 
 
+ipcMain.on('pdf-file-request', (event, folderName, divId_of_cv_container) => {
+  const dialogOptions = {
+    title: 'Select the File to be uploaded',
+    defaultPath: path.join(__dirname, '../assets/'),
+    buttonLabel: 'Upload File',
+    filters: [
+      { name: 'PDFs', extensions: ['pdf'] }
+    ],
+    properties: ['openFile']
+  };
+
+  if (process.platform === 'darwin') {
+    dialogOptions.properties.push('openDirectory');
+  }
+
+  dialog.showOpenDialog(dialogOptions).then(file => {
+    if (!file.canceled) {
+      const filepath = file.filePaths[0].toString();
+      event.reply('pdf-file-received', filepath, folderName);
+    }
+  }).catch(err => {
+    console.error(err);
+  });
+});
 
 
 

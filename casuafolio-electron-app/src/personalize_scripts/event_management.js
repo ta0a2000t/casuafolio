@@ -32,11 +32,11 @@ function removeFolder(folderName) {
 
 
 
-async function copyImageToNewLoc(imgSourcePath, destinationPath) {
+async function copyFileToNewLoc(fileSourcePath, destinationPath) {
   try {
     
     // Read the file from the source path
-    const fileData = fs.readFileSync(imgSourcePath); // note: no encoding is specified
+    const fileData = fs.readFileSync(fileSourcePath); // note: no encoding is specified
     
     // Write the file to the destination path
     fs.writeFileSync(destinationPath, fileData); // writing file synchronously
@@ -78,13 +78,19 @@ function processNewImage(imgSourcePath, event_folder_name, galleryDivID_of_added
   const originalImageName = path.basename(imgSourcePath);
   const uniqueImageName = `img_${Date.now()}_${Math.floor(Math.random() * 1000000)}_${originalImageName}`;
   const destinationPath = path.join(relativePathTo_events_images, event_folder_name, uniqueImageName);
-  copyImageToNewLoc(imgSourcePath, destinationPath);
+  copyFileToNewLoc(imgSourcePath, destinationPath);
 
-  console.log(event_folder_name)
-  console. trace()
   unsavedImagesList.push(path.join(event_folder_name, uniqueImageName));
 
   createImageElement(galleryDiv_of_addedImage, event_folder_name, uniqueImageName, isLogo);
+}
+
+function processNewCV(fileSourcePath, folderName) {
+  const destinationPath = path.join(relativePathTo_events_images, '..', 'personal_CV_file.pdf');
+  console.log(destinationPath);
+  copyFileToNewLoc(fileSourcePath, destinationPath);
+
+
 }
 
 

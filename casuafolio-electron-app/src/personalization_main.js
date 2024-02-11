@@ -33,6 +33,8 @@ fs.readFile(relativePathToPersonalizationConstants, 'utf8', (err, data) => {
   const info = JSON.parse(data);
   setInfo(info); // Correctly set the initial info state
   history.save(); // Save the initial state
+  console.log(2222222)
+
   populateForm(info);
 });
 
@@ -145,9 +147,35 @@ function onNavigatingBack() {
   alert('Note: unsaved changes are lost!')
 }
 
+function deleteCV() {
+  document.getElementById('resumePreviewer-div').innerHTML = ``;
+}
+function pickCV() {
+  
+  // pick the pdf file: show the file picker and copy, move, // delete personal_CV_file.pdf, then rename the new file to "personal_CV_file.pdf"
+  requestPDF()
+
+}
+
+  // show the cv on the form
+function setCV() {
+    // use contents of resumePreviewer-div to delete or populate the RESUME_LOCATION entry in the json file.
+  const pathPublicFolder = path.join(basePath,'public','personal_CV_file.pdf');
+  document.getElementById('resumePreviewer-div').innerHTML = `
+  <embed src="${pathPublicFolder}" type="application/pdf" width="350" height="400"> 
+  <br>
+  <button id="resumePicker-delete-button" class="event-delete-btn">Delete</button>
+  `;
+  document.getElementById('resumePicker-delete-button').addEventListener('click', deleteCV);
+}
+
+module.exports = {
+  setCV,
+  deleteCV
+};
 
 
-
+document.getElementById('resumePicker-btn').addEventListener('click', pickCV);
 document.getElementById('save-changes-btn').addEventListener('click', handleSubmit);
 document.getElementById('undoButton').addEventListener('click', undoChanges);
 document.getElementById('redoButton').addEventListener('click', redoChanges);

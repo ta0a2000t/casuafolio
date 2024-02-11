@@ -78,9 +78,9 @@
     </nav>
     
     
-    <nav class="undo-redo">
-        <button id="undoButton">Undo Save</button>
-        <button id="redoButton">Redo Save</button>
+    <nav class="undo-redo"> <!-- TODO: implement undo/redo functionality integrated with file operations. for now, buttons are hidden -->
+        <button id="undoButton" style="visibility:hidden;">Undo Save</button>
+        <button id="redoButton" style="visibility:hidden;">Redo Save</button>
     </nav>
 
     <div id="personalizationForm">
@@ -98,12 +98,6 @@
 
             <label for="metaDescription">Meta Description:</label>
             <input type="text" id="metaDescription" name="metaDescription"><br>
-
-            <label for="greeting">Greeting:</label>
-            <input type="text" id="greeting" name="greeting"><br>
-
-            <label for="aboutText">About Text:</label>
-            <textarea id="aboutText" name="aboutText" rows="4" cols="50"></textarea><br>
 
         </fieldset>
 
@@ -127,10 +121,20 @@
         </fieldset>
 
         <fieldset>
-            <legend>Resume and Tab Names</legend>
+            <legend>CV and Tab Names</legend>
 
-            <label for="resumeLocation">Resume Location:</label>
-            <input type="text" id="resumeLocation" name="resumeLocation"><br>
+            <label for="resumeLocation">CV/Resume Location:</label>
+            <div id="resumeLocation" name="resumeLocation" style="visibility:hidden;"></div>
+
+            <button id="resumePicker-btn">Select CV/Resume</button>
+            <br>
+
+            <div id="resumePreviewer-div">
+              <!-- to be filled via picker button-->
+            </div>
+
+            <br>
+            <br>
 
             <label for="aboutTabName">About Tab Name:</label>
             <input type="text" id="aboutTabName" name="aboutTabName"><br>
@@ -190,10 +194,13 @@
         <fieldset>
           <legend>About Section</legend>
           <div  id="aboutSectionInputs">
-
-              
+            <!-- To be populated by JavaScript -->
           </div>
-          <!-- To be populated by JavaScript -->
+          <label for="greeting">Greeting:</label>
+          <input type="text" id="greeting" name="greeting"><br>
+
+          <label for="aboutText">About Text:</label>
+          <textarea id="aboutText" name="aboutText" rows="4" cols="50"></textarea><br>
       </fieldset>
 
     </div>
