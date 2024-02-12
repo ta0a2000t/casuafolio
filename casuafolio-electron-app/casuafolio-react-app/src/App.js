@@ -73,19 +73,22 @@ function App() {
 
 
       <div className="center">
-        <div className="TabMenu">
-          <button 
-            className={activeTimeline === 'experiences' ? 'active' : ''} 
-            onClick={() => {
-              setActiveTimeline('experiences');
-              setSectionToScroll('timeline');
-            }}
-          >
-            {EXPERIENCE_TAB_NAME}
-          </button>
+      <div className="TabMenu">
+        
+        <button 
+        className={`${activeTimeline === 'experiences' ? 'active' : ''}`} 
+          onClick={() => {
+            setActiveTimeline('experiences');
+            setSectionToScroll('timeline');
+          }}
+        >
+          {EXPERIENCE_TAB_NAME}
+        </button>
+        
 
+        {PROJECTS_TAB_NAME && (
           <button 
-            className={activeTimeline === 'projects' ? 'active' : ''} 
+        className={`${activeTimeline === 'projects' ? 'active' : ''}`} 
             onClick={() => {
               setActiveTimeline('projects');
               setSectionToScroll('timeline');
@@ -93,22 +96,27 @@ function App() {
           >
             {PROJECTS_TAB_NAME}
           </button>
+        )}
+
+        {VOLUNTEER_TAB_NAME && (
           <button 
-            className={activeTimeline === 'volunteer' ? 'active' : ''} 
+        className={`${activeTimeline === 'volunteer' ? 'active' : ''}`} 
             onClick={() => {
               setActiveTimeline('volunteer');
               setSectionToScroll('timeline');
             }}
-                  >
+          >
             {VOLUNTEER_TAB_NAME}
           </button>
+        )}
 
-          <button onClick={() => setSectionToScroll('about')}>
-            {ABOUT_TAB_NAME}
-          </button>
-        </div>
-
+        
+        <button onClick={() => setSectionToScroll('about')}>
+          {ABOUT_TAB_NAME}
+        </button>
+        
       </div>
+    </div>
 
 
       <div className="top-right">
