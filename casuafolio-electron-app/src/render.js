@@ -1,6 +1,5 @@
 const { writeFile } = require('fs');
-const { app, BrowserWindow, dialog, ipcRenderer, shell } = require('electron');
-
+const { app, BrowserWindow, ipcRenderer, shell } = require('electron');
 // Global states
 
 

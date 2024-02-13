@@ -1,127 +1,116 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>CasuaFolio</title>
-    <link rel="stylesheet" href="index.css" />
-    <link rel="stylesheet" href="tooltip.css" />
 
-    <script defer src="render.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <title>CasuaFolio</title>
+  <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="tooltip.css" />
+
+  <script defer src="render.js"></script>
 
 
-  </head>
-  <body class="content">
-    <h1>Customize Your Web Portfolio</h1>
+</head>
 
-    <div class="button-container">
-      <div class="hover-text">
-        <button id="livePreviewBtn" class="button">Preview Live</button>
+<body>
+  <div>
+    <div class="content" id="back">
+      <h1>Customize Your Web Portfolio</h1>
 
-        <span class="tooltip-text" id="left">
-          
-        Click to preview your current portfolio in real-time, as you add your information.
-        <br><br>
-        Visit <a class="highlight" href="http://localhost:3000/" target="_blank">localhost:3000</a> on your browser, like Google Chrome, Safari, ...
-        
+      <div class="button-container">
+        <div class="hover-text">
+          <button id="livePreviewBtn" class="button">Preview Live</button>
 
-        </span>
-      </div>
-      
-
-      <div class="hover-text">
-        <a href="personalization_split_preview.html">
-        <button id="personalizeBtn" class="button">Edit Personal Info</button>
-       </a>
-        <span class="tooltip-text" id="left">
-          
-          Add or change your personal details and work experience.
-        
-        </span>
-      </div>
-      
-
-      <div class="build">
-        <div class="hover-text"><button id="buildBtn" class="button">Create & Download</button>
           <span class="tooltip-text" id="left">
-            
-            Complete and download your ready-to-use portfolio.
-          
+
+            Click to preview your current portfolio in real-time, as you add your information.
+            <br><br>
+            Visit <a class="highlight" href="http://localhost:3000/" target="_blank">localhost:3000</a> on your browser,
+            like Google Chrome, Safari, ...
+
+
           </span>
         </div>
 
+
+        <div class="hover-text">
+          <a href="personalization_split_preview.html">
+            <button id="personalizeBtn" class="button">Edit Personal Info</button>
+          </a>
+          <span class="tooltip-text" id="left">
+
+            Add or change your personal details and work experience.
+
+          </span>
+        </div>
+
+
+        <div class="build">
+          <div class="hover-text"><button id="buildBtn" class="button">Build & Download</button>
+            <span class="tooltip-text" id="left">
+
+              Complete and download your ready-to-use portfolio.
+
+            </span>
+          </div>
+
+        </div>
       </div>
-
-
-
     </div>
 
-    <script>
+    <div id="spinnerContainer" class="spinner-container">
+      <div id="front" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.5em;">
+        <div id="loadingSpinner" class="loader"></div>
+        <div id="loadingText">Building...</div>
+      </div>
+    </div>
 
 
-      
-      const livePreviewBtn = document.getElementById('livePreviewBtn');
-      livePreviewBtn.onclick = e => {
-        console.log(1);
-        window.open('http://localhost:3000/', '_blank'); // This will open the URL in a new window or tab
-      };
-      
-      const personalizeBtn = document.getElementById('personalizeBtn');
-      personalizeBtn.onclick = e => {
-        //  personalizeBtn.innerText = 'Recording';
-        console.log(2);
-      };
 
-      const { dialog } = require('electron').remote;
-      const { exec } = require('child_process');
-      const fs = require('fs-extra'); // fs-extra adds file system methods that aren't included in the native fs module. Make sure to install fs-extra using npm.
-      
-      const buildBtn = document.getElementById('buildBtn');
-      buildBtn.onclick = e => {
-        console.log(3); // Log for debugging purposes
-      
-        // Show a dialog to the user to select a directory
-        dialog.showOpenDialog({
-          properties: ['openDirectory']
-        }).then(result => {
-          if (result.canceled) {
-            console.log('User canceled the save operation.');
-            return;
-          }
-      
-          // Assuming the user selected a directory, get the path
-          const savePath = result.filePaths[0];
-          console.log(`Saving to: ${savePath}`);
-      
-          // Define the command to run 'npm run build' in the React app directory
-          const command = 'npm run build';
-          // Adjust the path to where your React app is located relative to the Electron app
-          const reactAppPath = '/Users/tahaal/Documents/GitHub/casuafolio/casuafolio-electron-app/casuafolio-react-app';
-      
-          // Execute the command
-          exec(command, { cwd: reactAppPath }, (error, stdout, stderr) => {
-            if (error) {
-              console.error(`exec error: ${error}`);
-              return;
-            }
-            console.log(`stdout: ${stdout}`);
-            console.error(`stderr: ${stderr}`);
-      
-            // After successful build, copy the build directory to the chosen save path
-            const buildDirectoryPath = `${reactAppPath}/build`;
-            fs.copy(buildDirectoryPath, savePath, err => {
-              if (err) {
-                console.error('Error copying the build directory:', err);
-              } else {
-                console.log('Build directory successfully copied to:', savePath);
-              }
-            });
-          });
-        }).catch(err => {
-          console.error('Error showing save dialog:', err);
-        });
-      };
-      
-      
-    </script>
-  </body>
+  </div>
+
+
+  <script>
+    const livePreviewBtn = document.getElementById('livePreviewBtn');
+    livePreviewBtn.onclick = e => {
+      console.log(1);
+      window.open('http://localhost:3000/', '_blank'); // This will open the URL in a new window or tab
+    };
+
+    const personalizeBtn = document.getElementById('personalizeBtn');
+    personalizeBtn.onclick = e => {
+      //  personalizeBtn.innerText = 'Recording';
+      console.log(2);
+    };
+
+
+    const buildBtn = document.getElementById('buildBtn');
+    const spinnerContainer = document.getElementById('spinnerContainer')
+    buildBtn.onclick = e => {
+      console.log(3); // Log for debugging purposes
+
+      // send some ipc message to open the dialog
+      spinnerContainer.style.display = 'flex';
+      ipcRenderer.send('open-save-dialog');
+
+      ipcRenderer.on('open-save-dialog-completed', (event, targetPath) => {
+        spinnerContainer.style.display = 'none';
+        alert(`✅ 🥳 Saved at: ${targetPath}`)
+
+      });
+
+      ipcRenderer.on('open-save-dialog-failed', (event) => {
+
+        alert(`Saving Failed ❌`);
+
+      });
+
+    };
+
+
+
+
+  </script>
+</body>
+
 </html>

@@ -69,11 +69,11 @@ function handleSubmit() {
     
     fs.writeFile(relativePathToPersonalizationConstants, JSON.stringify(info), (err) => {
       if (err) {
-        alert("Error While Saving");
+        alert("Error While Saving ❌ 🙀");
         console.error("Could not write to file", err);
         return;
       }
-      alert("Successfully Saved :)");
+      alert("Successfully Saved ✅ 😺");
 
       // delete marked files and folders upon successful save
       deleteMarkedFilesAndFolders();
@@ -82,7 +82,7 @@ function handleSubmit() {
       unsavedImagesList = []; // Reset the list
     });
   } else {
-    alert("Saving Failed :(  \n\n".concat(formValidationResult.message));
+    alert("Saving Failed ❌ 🙀 \n\n".concat(formValidationResult.message));
   }
 }
 
@@ -92,7 +92,6 @@ console.log(relativePathTo_events_images)
 function rmUnsavedImagesList() {
   unsavedImagesList.forEach(unsavedImage => {
     let event_and_image_names =unsavedImage;
-    alert(unsavedImage)
     deleteImageFile(event_and_image_names);
     });
 };
@@ -144,7 +143,7 @@ function onNavigatingBack() {
   // cleanup
   deleteUnsavedFiles();
 
-  alert('Note: unsaved changes are lost!')
+  alert('Unsaved changes will be lost 🚨')
 }
 
 function deleteCV() {

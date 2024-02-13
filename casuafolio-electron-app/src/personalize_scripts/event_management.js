@@ -337,7 +337,7 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
           
           deleteButton.addEventListener('click', function() {
               if (skillsDiv.querySelectorAll('input').length <= 2) {
-                  alert('You must have at least 2 skills.');
+                  alert('You must have at least 2 skills. 😾');
                   return;
               }
               skillInput.remove();
@@ -350,19 +350,19 @@ function createEventDiv(event, index, sectionInfo, sectionId) {
               createSkillInput(skillsDiv, skill, `${key}-${index}_${skillIndex}`);
           });
       } else {
-          alert('You must have at least 2 skills.');
+          alert('You must have at least 2 skills. 😾');
       }
   
       addButton.addEventListener('click', function() {
           const skillInputs = Array.from(skillsDiv.querySelectorAll('input'));
   
           if (skillInputs.length >= 10) {
-              alert('You cannot add more than 10 skills.');
+              alert('You cannot add more than 10 skills. 😾');
               return;
           }
   
           if (skillInputs.some(input => input.value.trim().length === 0)) {
-              alert('You must populate the empty skill field first.');
+              alert('You must populate the empty skill field first. 😾');
               return;
           }
   

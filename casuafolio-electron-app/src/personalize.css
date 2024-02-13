@@ -220,6 +220,9 @@ html{
     align-items: center;
     justify-content: start;
     padding: 1em;
+    padding-top: 2em;
+    padding-left: 0em;
+
 }
 
 i {

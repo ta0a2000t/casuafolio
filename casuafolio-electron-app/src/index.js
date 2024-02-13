@@ -1,6 +1,8 @@
 
 const { app, BrowserWindow, dialog, ipcMain} = require('electron');
 const path = require('path');
+const { exec } = require('child_process');
+const fs = require('fs-extra');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -187,13 +189,57 @@ ipcMain.on('pdf-file-request', (event, folderName, divId_of_cv_container) => {
   });
 });
 
+// Set the base path depending on the environment
+let basePath =  path.join(__dirname, '..') // Adjust if // Corrected path for production
 
+if (path.basename(basePath) == 'app.asar') { // when the app is Packaged
+  basePath = path.join(basePath, '..', 'casuafolio-react-app');
+} else {
+  basePath = path.join(basePath, 'casuafolio-react-app')
+}
 
+ipcMain.on('open-save-dialog', (event) => {
+  dialog.showOpenDialog({
+    title: 'Select a Folder for CasuaFolio Build',
+    properties: ['openDirectory'],
+    buttonLabel: 'Download Here'
+  }).then(result => {
+    if (result.canceled) {
+      console.log('User canceled the save operation.');
+      return;
+    }
 
+    const savePath = result.filePaths[0];
+    console.log(`Saving to: ${savePath}`);
 
+    const command = 'npm run build';
+    const reactAppPath = basePath;
 
+    exec(command, { cwd: reactAppPath }, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`exec error: ${error}`);
+        return;
+      }
+      console.log(`stdout: ${stdout}`);
+      console.error(`stderr: ${stderr}`);
 
+      const buildDirectoryPath = `${reactAppPath}/build`;
+      const targetPath = path.join(savePath, 'CasuaFolio_build'); // create a folder called 'CasuaFolio_build'
+      
+      fs.copy(buildDirectoryPath, targetPath, err => {
+        if (err) {
+          console.error('Error copying the build directory:', err);
+          event.reply('open-save-dialog-failed')
+        } else {
+          console.log('Build directory successfully copied to:', targetPath);
+          event.reply('open-save-dialog-completed', targetPath)
+        }
+      });
+    });
+  }).catch(err => {
+    console.error('Error showing save dialog:', err);
+    event.reply('open-save-dialog-failed')
 
-
-
-
+  });
+  
+});
