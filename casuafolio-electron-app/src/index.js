@@ -13,7 +13,7 @@ let isCleanupDone = false;
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    icon: path.join(__dirname, 'icons', 'png', '256x256.png'),
+    icon: path.join(__dirname, 'icons', '/mac/icon.icns'),
     backgroundColor: "#1D1D1D",
     width: 800,
     height: 600,
@@ -206,6 +206,8 @@ ipcMain.on('open-save-dialog', (event) => {
   }).then(result => {
     if (result.canceled) {
       console.log('User canceled the save operation.');
+      event.reply('open-save-dialog-failed', true)
+
       return;
     }
 

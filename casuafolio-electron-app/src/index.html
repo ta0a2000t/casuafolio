@@ -87,6 +87,9 @@
     const buildBtn = document.getElementById('buildBtn');
     const spinnerContainer = document.getElementById('spinnerContainer')
     buildBtn.onclick = e => {
+      e.stopImmediatePropagation(); // to stop alert from showing up mult times
+      e.preventDefault();
+      
       console.log(3); // Log for debugging purposes
 
       // send some ipc message to open the dialog
@@ -95,13 +98,18 @@
 
       ipcRenderer.on('open-save-dialog-completed', (event, targetPath) => {
         spinnerContainer.style.display = 'none';
+        e.stopImmediatePropagation();
         alert(`✅ 🥳 Saved at: ${targetPath}`)
 
       });
 
-      ipcRenderer.on('open-save-dialog-failed', (event) => {
+      ipcRenderer.on('open-save-dialog-failed', (event, hideAlert) => {
+        spinnerContainer.style.display = 'none';
+        if(hideAlert){
+        } else{
+          alert(`Saving Failed ❌`);
 
-        alert(`Saving Failed ❌`);
+        }
 
       });
 
