@@ -200,7 +200,7 @@ html{
 
 
 
-#back-button {
+.nav-button {
     background-color: #23232396;
     color: #ffffff; /* White */
     padding: 10px 20px;
@@ -211,7 +211,7 @@ html{
     align-items: center; /* Centers text and icon vertically */
 }
 
-#back-button:hover {
+.nav-button:hover {
     background-color:#53187378; /* Darker green on hover */
 }
 

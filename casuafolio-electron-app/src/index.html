@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>CasuaFolio</title>
+  <title>CasuaFolio Builder - Main Menu</title>
   <link rel="stylesheet" href="index.css" />
   <link rel="stylesheet" href="tooltip.css" />
 
@@ -15,7 +15,12 @@
 <body>
   <div>
     <div class="content" id="back">
-      <h1>Customize Your Web Portfolio</h1>
+      <div class="header-container">
+        <h1>Customize Your Web Portfolio</h1>
+        <a href="index.html" id="quit-button" class="nav-button" >
+          <img src="icons8-quit-64.png" alt="Quit/Exit" width="50"> Quit
+        </a>
+      </div>
 
       <div class="button-container">
         <div class="hover-text">
@@ -66,11 +71,49 @@
     </div>
 
 
+    <div id="npm-not-installed-warning-container" style="display: none;">
+      <div id="npm-not-installed-warning-box" style="display: block;">
+        <p><strong>Warning:</strong> npm is not installed. Please install Node.js (which includes npm) from <a href="https://nodejs.org/en/download/" target="_blank">https://nodejs.org/en/download/</a> and quit CasuaFolio Builder and try again.</p>
+      </div>
+    </div>
+
+
+  
+
+
 
   </div>
 
 
   <script>
+
+    const { exec } = require('child_process');
+
+  exec('npm --version', (error, stdout) => {
+    if (error) {
+        // npm is not installed, inform the user or open an installation guide
+        console.error("npm is not installed. Please install Node.js and npm.");
+
+        // show a warning. div id='npm-not-installed-wanring-container', 
+        document.getElementById('npm-not-installed-warning-container').style.display = 'flex';
+
+    } else {
+        // npm is installed, proceed with your logic
+
+        //document.getElementById('npm-not-installed-warning-container').style.display = 'flex';
+
+        // show a green checkmark
+        console.log(`npm is installed, version: ${stdout.trim()}`);
+    }
+  });
+
+    const quitBtn = document.getElementById('quit-button');
+    quitBtn.onclick = e => {
+      ipcRenderer.send('quit-application');
+
+    };
+
+
     const livePreviewBtn = document.getElementById('livePreviewBtn');
     livePreviewBtn.onclick = e => {
       console.log(1);
@@ -103,11 +146,12 @@
 
       });
 
-      ipcRenderer.on('open-save-dialog-failed', (event, hideAlert) => {
+      ipcRenderer.on('open-save-dialog-failed', (event, hideAlert, msg) => {
         spinnerContainer.style.display = 'none';
         if(hideAlert){
         } else{
           alert(`Saving Failed ❌`);
+          alert(msg)
 
         }
 

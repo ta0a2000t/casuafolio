@@ -117,3 +117,79 @@ h1 {
   background-color: rgba(81, 33, 166, 0.7);
   z-index: 100; /* Ensure it's above other content */
 }
+
+
+
+
+
+
+
+
+#npm-not-installed-warning-container {
+  display: none; /* switch to 'flex' when building*/
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed; /* Changed to fixed to cover the entire viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(81, 33, 166, 0.7);
+  z-index: 100; /* Ensure it's above other content */
+}
+
+#npm-not-installed-warning-box {
+  display: none; /* Hidden by default; JavaScript will change this if npm is not detected */
+  margin: 20px;
+  padding: 20px;
+  background-color: #ffcccb; /* Light red background */
+  color: black; /* Text color */
+  border-left: 5px solid #ff0000; /* Red border on the left for emphasis */
+}
+
+
+#npm-not-installed-warning-container p {
+  margin: 0;
+  font-size: 16px; /* Adjust based on your design */
+}
+
+#npm-not-installed-warning-container a {
+  color: #007bff; /* Adjust link color based on your design */
+}
+
+
+
+
+
+
+
+
+
+
+.header-container {
+  display: flex;
+  justify-content: space-between; /* Align items on opposite ends */
+  align-items: center; /* Center items vertically */
+  padding: 10px; /* Add some padding around the container */
+}
+
+
+.nav-button {
+  background-color: #23232396;
+  color: #ffffff; /* White */
+  padding: 10px 20px;
+  text-decoration: none; /* Removes underline from link */
+  border-radius: 5px;
+  margin-right: 20px; /* Gives some space between the Back button and title */
+  display: inline-flex; /* Allows the button and title to be on the same line */
+  align-items: center; /* Centers text and icon vertically */
+}
+
+.nav-button:hover {
+  background-color:#53187378; /* Darker green on hover */
+}
+
+#quit-button {
+  z-index: 101;/*to be in front of the warning message */
+}

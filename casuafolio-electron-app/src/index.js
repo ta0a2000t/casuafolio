@@ -39,12 +39,15 @@ const createWindow = () => {
 
   mainWindow.on('close', (e) => {
      // Prevent window from closing immediately
-    e.preventDefault();
-    console.log('Quitting casuafolio...')
+    if (mainWindow.title !== 'CasuaFolio Builder - Main Menu') { // only exit when in the main menu
+      e.preventDefault();
+      console.log('Quitting casuafolio... disabled :)')
+    } else {
     // close
+    console.log('Quitting casuafolio... :)')
     mainWindow.destroy()
     app.quit()
-
+    }
   })
 };
 
@@ -82,9 +85,9 @@ app.on('ready', createWindow);
 app.on('window-all-closed', () => {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
+  //if (process.platform !== 'darwin') {
     app.quit();
-  }
+  //}
 });
 
 app.on('activate', () => {
@@ -214,34 +217,59 @@ ipcMain.on('open-save-dialog', (event) => {
     const savePath = result.filePaths[0];
     console.log(`Saving to: ${savePath}`);
 
-    const command = 'npm run build';
     const reactAppPath = basePath;
+    let command = 'npm install';
 
     exec(command, { cwd: reactAppPath }, (error, stdout, stderr) => {
       if (error) {
         console.error(`exec error: ${error}`);
+        event.reply('open-save-dialog-failed', false, reactAppPath)
         return;
-      }
-      console.log(`stdout: ${stdout}`);
-      console.error(`stderr: ${stderr}`);
+      } else {
 
-      const buildDirectoryPath = `${reactAppPath}/build`;
-      const targetPath = path.join(savePath, 'CasuaFolio_build'); // create a folder called 'CasuaFolio_build'
-      
-      fs.copy(buildDirectoryPath, targetPath, err => {
-        if (err) {
-          console.error('Error copying the build directory:', err);
-          event.reply('open-save-dialog-failed')
-        } else {
-          console.log('Build directory successfully copied to:', targetPath);
-          event.reply('open-save-dialog-completed', targetPath)
-        }
-      });
+        command = 'npm run build';
+
+        exec(command, { cwd: reactAppPath }, (error, stdout, stderr) => {
+          if (error) {
+            console.error(`exec error: ${error}`);
+            event.reply('open-save-dialog-failed', false, reactAppPath)
+            return;
+          }
+          console.log(`stdout: ${stdout}`);
+          console.error(`stderr: ${stderr}`);
+    
+          const buildDirectoryPath = `${reactAppPath}/build`;
+          const targetPath = path.join(savePath, 'CasuaFolio_build'); // create a folder called 'CasuaFolio_build'
+          
+          fs.copy(buildDirectoryPath, targetPath, err => {
+            if (err) {
+              console.error('Error copying the build directory:', err);
+              event.reply('open-save-dialog-failed')
+            } else {
+              console.log('Build directory successfully copied to:', targetPath);
+              event.reply('open-save-dialog-completed', targetPath)
+            }
+          });
+        });
+
+        
+      }
+
     });
+
+
   }).catch(err => {
     console.error('Error showing save dialog:', err);
     event.reply('open-save-dialog-failed')
 
   });
   
+});
+
+
+
+
+
+ipcMain.on('quit-application', (event) => {
+  app.quit();
 });
