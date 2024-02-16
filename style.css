@@ -1,0 +1,132 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #000; /* Black background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, sans-serif;
+    color: #fff; /* White text color */
+
+}
+
+.intro-section h1 {
+    font-family: 'Brush Script MT', cursive;
+
+}
+
+.container {
+    width: 60%;
+    padding: 40px;
+    background-color: #222; /* Slightly lighter black for the container */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.217); /* Soft white glow */
+}
+
+.intro-section h1, .intro-section p {
+    color: #ffffff; /* Ensure the text is white */
+}
+
+.intro-section h1 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+
+.intro-section p {
+    font-size: 1.2em;
+    margin-bottom: 2em;
+}
+
+.download-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.download-button {
+    box-shadow: 0 0 0.4em rgba(255, 255, 255, 0.217); /* Soft white glow */
+
+    display: inline-flex;
+    align-items: center; /* Ensures vertical centering of items */
+    padding: 10px 20px;
+    background-color: #000000;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.download-button:hover {
+    box-shadow: 0 0.1em 0.4em rgba(0, 0, 0, 0.217); /* Soft white glow */
+
+    background-color: #5d28b3;
+}
+
+#mac-download {
+    background-color: #000000;
+}
+
+#mac-download:hover {
+    background-color: #5d28b3;
+}
+
+.icon {
+    margin-right: 10px; /* Adds some space between the icon and the text */
+    width: 3em; /* Adjust as needed */
+    height: auto; /* Keeps the aspect ratio */
+}
+
+
+
+.site-footer {
+    text-align: center;
+    padding-top: 40px;
+    color: #fff; /* Adjust if you have a different page background color */
+    font-family: 'Brush Script MT', cursive;
+}
+
+.site-footer p {
+    margin: 0;
+    font-size: 1em;
+}
+
+.site-footer a {
+    color: #4fd1c5; /* Use a color that stands out but fits your design */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.site-footer a:hover {
+    color: #ffffff;
+}
+
+
+
+
+
+
+
+.live-example-link {
+    color: #4fd1c5; /* A color that stands out */
+    font-weight: bold; /* Make it bold to catch attention */
+    text-decoration: none; /* Removes the underline */
+    padding: 1px; /* Some padding for better visibility */
+    border-radius: 5px; /* Rounded corners for a modern look */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+}
+
+.live-example-link:hover {
+    background-color: #333; /* Darker background on hover */
+    color: #ffffff; /* Change text color on hover for contrast */
+}
+
+
+
+.highlight {
+    background-color: #4fd1c5; /* A color that stands out, adjust as needed */
+    color: #000; /* Text color for the highlight, adjust as needed */
+    padding: 2px 3px; /* Padding around the text */
+    border-radius: 4px; /* Rounded corners for the highlight */
+    font-weight: bold; /* Make the text bold */
+}
